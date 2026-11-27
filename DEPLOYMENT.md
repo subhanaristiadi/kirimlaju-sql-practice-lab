@@ -6,6 +6,8 @@
 - Pages: https://subhanaristiadi.github.io/krimlaju-sql-practice-lab/
 - API: https://krimlaju-sql-practice-lab.onrender.com
 - Neon project: blue-field-39983906, database kirimlaju, production branch, PostgreSQL 16, Singapore.
+- Render service: srv-dc4e19bl550s7390q5og; deployment awal live dep-dc4e19rl550s7390q6s0.
+- Pages workflow berhasil: https://github.com/subhanaristiadi/krimlaju-sql-practice-lab/actions/runs/45924415977
 
 ## Database kosong baru
 
@@ -37,3 +39,5 @@ Deployment melalui workflow `.github/workflows/pages.yml` dari branch `main`. Ar
 ## Verifikasi
 
 `python -m unittest discover -s tests -v` memeriksa cakupan 55 sumber + 20 tambahan, parsing seluruh referensi, penolakan operasi tulis/multi-statement, CORS, dan perbandingan hasil. `python verify_curriculum.py` mengeksekusi 75 referensi dengan role reader, memeriksa truncation, dan mencatat kolom serta jumlah baris di docs/reference_verification.json. Uji deployment mencakup health, query, jawaban benar/salah, SQL terlarang, CORS, dan browser frontend.
+
+`python verify_deployment.py` menjalankan 14 pemeriksaan terhadap layanan live dan mencatat hasil di `docs/deployment_verification.json`. Semuanya lulus pada deployment awal. Browser juga berhasil memvalidasi KL-01 dan KL-75, menampilkan empat tabel, mencari latihan terakhir, dan mempertahankan progres/catatan setelah reload. CSS dibandingkan langsung dengan template dan identik. Akses log aplikasi Render mengembalikan 503 dari penyedia log; pemeriksaan runtime dan browser berhasil.

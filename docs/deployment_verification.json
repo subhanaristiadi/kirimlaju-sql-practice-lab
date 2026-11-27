@@ -1,0 +1,64 @@
+{
+  "checks": [
+    {
+      "check": "Health: Neon connected",
+      "passed": true
+    },
+    {
+      "check": "75 exercises with expected columns",
+      "passed": true
+    },
+    {
+      "check": "CORS allows Pages",
+      "passed": true
+    },
+    {
+      "check": "CORS excludes unknown origins",
+      "passed": true
+    },
+    {
+      "check": "All 17,427 source rows and 50 audit anomalies",
+      "passed": true
+    },
+    {
+      "check": "Duplicate column names preserve positional values",
+      "passed": true
+    },
+    {
+      "check": "Multiple statements rejected",
+      "passed": true
+    },
+    {
+      "check": "Write SQL rejected before execution",
+      "passed": true
+    },
+    {
+      "check": "Dedicated reader without CREATE/INSERT",
+      "passed": true
+    },
+    {
+      "check": "Reference endpoint available",
+      "passed": true
+    },
+    {
+      "check": "600-customer answer validates without truncation",
+      "passed": true
+    },
+    {
+      "check": "Wrong answer fails validation",
+      "passed": true
+    },
+    {
+      "check": "Pages serves Kirimlaju frontend",
+      "passed": true
+    },
+    {
+      "check": "Pages artifact excludes raw CSV",
+      "passed": true
+    }
+  ],
+  "pages": "https://subhanaristiadi.github.io/krimlaju-sql-practice-lab/",
+  "api": "https://krimlaju-sql-practice-lab.onrender.com",
+  "render_deploy": "dep-dc4e19rl550s7390q6s0",
+  "runtime_log_check": "Render log provider returned 503; runtime requests and browser checks passed."
+}
