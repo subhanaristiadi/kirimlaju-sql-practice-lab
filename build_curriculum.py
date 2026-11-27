@@ -160,10 +160,13 @@ add(74,'Top lima kontribusi rute per layanan','Satu baris per layanan dan rute t
 add(75,'Target SLA 90 persen','Satu baris per layanan',f"WITH x AS ({service}) SELECT service_type,eligible_delivered,on_time,on_time_rate_pct,GREATEST(0,CEIL((0.90*eligible_delivered-on_time)/0.10))::bigint AS additional_on_time_needed FROM x",'Selesaikan (on_time+x)/(eligible+x)>=0,90; x bilangan bulat nonnegatif. Semua tambahan diasumsikan eligible dan on-time.', 'Advanced')
 
 assert len(items)==75
+from localize_curriculum import apply_english
+apply_english(items)
 refs = {e['id']:{'sql':e.pop('_sql')+';', 'policy':{'compare_column_names':True,'order_matters':False}} for e in items}
 (ROOT/'exercises.json').write_text(json.dumps(items,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 (ROOT/'reference_queries.json').write_text(json.dumps(refs,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 topics = [{'topic':t,'exercise_ids':[e['id'] for e in items if e['topic']==t]} for t in dict.fromkeys(e['topic'] for e in items)]
 (ROOT/'curriculum_topics.json').write_text(json.dumps(topics,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+(ROOT/'docs/business_questions.en.md').write_text('# Kirimlaju Business Questions\n\n'+'\n'.join(f"{e['number']}. {e['business_question']}" for e in items)+'\n',encoding='utf-8')
 (ROOT/'docs/additional_business_questions.md').write_text('# 20 Business Question Tambahan\n\n'+'\n'.join(f'{n}. {questions[n]}' for n in range(56,76))+'\n',encoding='utf-8')
 print('Built 75 exercises: all 55 original questions + 20 additions.')

@@ -9,7 +9,7 @@ for name in ['index.html','server.py']:
     s=s.replace('https://kirimlaju-sql-practice-lab.onrender.com','https://krimlaju-sql-practice-lab.onrender.com')
     if name=='index.html':
         s=s.replace('☕ Kirimlaju','📦 Kirimlaju').replace('id="totalCount">45','id="totalCount">75')
-        s=s.replace('Safety note: run this service on localhost only. Read-only transactions are a secondary control; use a dedicated PostgreSQL role with SELECT privileges only.', 'Latihan memakai dataset simulasi Kirimlaju. Query dijalankan dengan akun PostgreSQL khusus SELECT; progres dan catatan tersimpan di browser ini.')
+        s=s.replace('Safety note: run this service on localhost only. Read-only transactions are a secondary control; use a dedicated PostgreSQL role with SELECT privileges only.', 'Practice with the simulated Kirimlaju dataset. Queries run through a dedicated SELECT-only PostgreSQL role; your progress and notes are stored in this browser.')
         s=s.replace('if(!r.ok)throw new Error(d.error||d.message||`HTTP ${r.status}`)', 'if(!r.ok)throw new Error([d.error||d.message||`HTTP ${r.status}`,d.detail].filter(Boolean).join(": "))')
         schema={}
         ddl=(ROOT/'schema.sql').read_text(encoding='utf-8')

@@ -12,7 +12,10 @@ class LabTests(unittest.TestCase):
         original=re.findall(r'^\d+\. (.+)$',source,re.M)
         exercises=list(server.EXERCISES.values())
         self.assertEqual(len(exercises),75)
-        self.assertEqual([e['business_question'] for e in exercises[:55]],original)
+        self.assertEqual(len(original),55)
+        self.assertEqual([e['source_question'] for e in exercises[:55]],list(range(1,56)))
+        translated=(ROOT/'docs/business_questions.en.md').read_text(encoding='utf-8')
+        self.assertEqual([e['business_question'] for e in exercises],re.findall(r'^\d+\. (.+)$',translated,re.M))
         self.assertEqual(set(server.EXERCISES),set(server.REFERENCES))
         for e in exercises:
             self.assertTrue(e['expected_output'],e['id'])

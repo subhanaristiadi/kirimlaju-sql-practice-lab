@@ -2,6 +2,8 @@
 
 Aplikasi latihan PostgreSQL dengan **75 business question**, memakai tampilan dan interaksi [Sedukopi SQL Practice Lab](https://github.com/subhanaristiadi/sedukopi-sql-practice-lab).
 
+Seluruh interface dan materi latihan ditampilkan dalam bahasa Inggris. Terjemahan 75 pertanyaan ada di `docs/business_questions.en.md`; dokumen sumber bahasa Indonesia tetap disimpan untuk melacak cakupan pertanyaan. `localize_curriculum.py` menerapkan terjemahan tanpa mengubah ID latihan, kolom output, atau query referensi.
+
 - Aplikasi: https://subhanaristiadi.github.io/krimlaju-sql-practice-lab/
 - API: https://krimlaju-sql-practice-lab.onrender.com
 - Dataset simulasi: https://ngulikdata.com/datasets/kirimlaju

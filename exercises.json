@@ -3,13 +3,13 @@
     "id": "KL-01",
     "number": 1,
     "topic": "Executive / KPI",
-    "title": "Ringkasan KPI pengiriman",
+    "title": "Shipment KPI summary",
     "difficulty": "Beginner",
-    "business_question": "Berapa total shipment, total transaction value, average shipment cost, dan average weight?",
+    "business_question": "What are the total shipment count, total transaction value, average shipment cost, and average weight?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris keseluruhan",
+    "analytical_grain": "One summary row",
     "expected_output": [
       "total_shipments",
       "transaction_value_idr",
@@ -19,23 +19,23 @@
     "learning_objectives": [
       "Executive / KPI",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Hitung dari shipments tanpa join. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Calculate these metrics directly from shipments without joins. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 1
   },
   {
     "id": "KL-02",
     "number": 2,
     "topic": "Executive / KPI",
-    "title": "Komposisi layanan",
+    "title": "Service mix",
     "difficulty": "Beginner",
-    "business_question": "Bagaimana komposisi shipment berdasarkan service type?",
+    "business_question": "What is the shipment mix by service type?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per service_type",
+    "analytical_grain": "One row per service_type",
     "expected_output": [
       "service_type",
       "shipments",
@@ -44,23 +44,23 @@
     "learning_objectives": [
       "Executive / KPI",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Persentase menggunakan seluruh shipment. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use all shipments as the percentage denominator. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 2
   },
   {
     "id": "KL-03",
     "number": 3,
     "topic": "Executive / KPI",
-    "title": "Peringkat volume dan nilai layanan",
+    "title": "Service volume and value rankings",
     "difficulty": "Intermediate",
-    "business_question": "Service mana yang memiliki volume terbesar dan transaction value terbesar?",
+    "business_question": "Which services have the highest shipment volume and transaction value?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per layanan",
+    "analytical_grain": "One row per service",
     "expected_output": [
       "service_type",
       "shipments",
@@ -71,23 +71,23 @@
     "learning_objectives": [
       "Executive / KPI",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tampilkan seluruh layanan dengan dua peringkat; ranking ties menggunakan DENSE_RANK. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return all services with both rankings. Use DENSE_RANK for ties. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 3
   },
   {
     "id": "KL-04",
     "number": 4,
     "topic": "Executive / KPI",
-    "title": "Delivery, loss, dan return rate",
+    "title": "Delivery, loss, and return rates",
     "difficulty": "Beginner",
-    "business_question": "Bagaimana delivery, loss, dan return rate secara keseluruhan?",
+    "business_question": "What are the overall delivery, loss, and return rates?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris keseluruhan",
+    "analytical_grain": "One summary row",
     "expected_output": [
       "total_shipments",
       "delivered",
@@ -100,23 +100,23 @@
     "learning_objectives": [
       "Executive / KPI",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Denominator semua shipment. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use all shipments as the denominator. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 4
   },
   {
     "id": "KL-05",
     "number": 5,
     "topic": "Executive / KPI",
-    "title": "Tren KPI bulanan",
+    "title": "Monthly KPI trends",
     "difficulty": "Intermediate",
-    "business_question": "Bagaimana KPI berubah dari bulan ke bulan?",
+    "business_question": "How do the KPIs change from month to month?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per bulan pickup",
+    "analytical_grain": "One row per pickup month",
     "expected_output": [
       "pickup_month",
       "shipments",
@@ -129,23 +129,23 @@
     "learning_objectives": [
       "Executive / KPI",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tampilkan bulan yang memiliki shipment; bulan berbentuk tanggal hari pertama. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Include months with shipments. Represent each month using its first calendar date. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 5
   },
   {
     "id": "KL-06",
     "number": 6,
     "topic": "Service Performance",
-    "title": "Profil volume dan nilai layanan",
+    "title": "Service volume and value profile",
     "difficulty": "Beginner",
-    "business_question": "Bagaimana volume, transaction value, average cost, dan average weight untuk regular, express, dan same-day?",
+    "business_question": "What are the shipment volume, transaction value, average cost, and average weight for regular, express, and same-day services?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per layanan",
+    "analytical_grain": "One row per service",
     "expected_output": [
       "service_type",
       "shipments",
@@ -156,23 +156,23 @@
     "learning_objectives": [
       "Service Performance",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Gunakan nilai service_type persis dari data. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use the exact service_type values stored in the dataset. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 6
   },
   {
     "id": "KL-07",
     "number": 7,
     "topic": "Service Performance",
-    "title": "Layanan dengan SLA terbaik",
+    "title": "Services with the best on-time performance",
     "difficulty": "Intermediate",
-    "business_question": "Service mana yang memiliki on-time rate terbaik?",
+    "business_question": "Which service has the best on-time rate?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per layanan",
+    "analytical_grain": "One row per service",
     "expected_output": [
       "service_type",
       "eligible_delivered",
@@ -183,23 +183,23 @@
     "learning_objectives": [
       "Service Performance",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tampilkan semua layanan, ranking berdasarkan rate yang telah dibulatkan. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return all services and rank them using the rounded on-time rate. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 7
   },
   {
     "id": "KL-08",
     "number": 8,
     "topic": "Service Performance",
-    "title": "Nilai transaksi dan performa delivery",
+    "title": "Transaction value and delivery performance",
     "difficulty": "Intermediate",
-    "business_question": "Apakah service dengan transaction value lebih tinggi juga memberikan delivery performance lebih baik?",
+    "business_question": "Do services with higher transaction value also deliver better delivery performance?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per layanan",
+    "analytical_grain": "One row per service",
     "expected_output": [
       "service_type",
       "shipments",
@@ -216,23 +216,23 @@
     "learning_objectives": [
       "Service Performance",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Bandingkan nilai dan performa melalui scorecard; korelasi sebab-akibat tidak disimpulkan. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Compare value and performance using a scorecard. Do not infer causation from the comparison. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 8
   },
   {
     "id": "KL-09",
     "number": 9,
     "topic": "Service Performance",
-    "title": "Tingkat keterlambatan layanan",
+    "title": "Late delivery rates by service",
     "difficulty": "Intermediate",
-    "business_question": "Bagaimana tingkat keterlambatan menurut service?",
+    "business_question": "How do late delivery rates vary by service?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per layanan",
+    "analytical_grain": "One row per service",
     "expected_output": [
       "service_type",
       "eligible_delivered",
@@ -242,23 +242,23 @@
     "learning_objectives": [
       "Service Performance",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Late rate hanya dari eligible delivered. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Calculate the late rate using eligible delivered shipments only. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 9
   },
   {
     "id": "KL-10",
     "number": 10,
     "topic": "Service Performance",
-    "title": "Volume tinggi dan outcome buruk",
+    "title": "High volume and poor delivery outcomes",
     "difficulty": "Intermediate",
-    "business_question": "Apakah ada service yang memiliki volume tinggi tetapi outcome delivery relatif buruk?",
+    "business_question": "Are there services with high shipment volume but relatively poor delivery outcomes?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per layanan",
+    "analytical_grain": "One row per service",
     "expected_output": [
       "service_type",
       "shipments",
@@ -271,23 +271,23 @@
     "learning_objectives": [
       "Service Performance",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "High volume >= rata-rata volume antar layanan; below average memakai rata-rata tak berbobot dari delivery rate layanan. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "High volume means volume at least equal to the mean across services. Below-average delivery uses the unweighted mean of service delivery rates. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 10
   },
   {
     "id": "KL-11",
     "number": 11,
     "topic": "Route Performance",
-    "title": "Peringkat volume rute",
+    "title": "Route volume rankings",
     "difficulty": "Beginner",
-    "business_question": "Rute mana yang memiliki shipment volume tertinggi?",
+    "business_question": "Which routes have the highest shipment volume?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per rute aktif",
+    "analytical_grain": "One row per active route",
     "expected_output": [
       "route_id",
       "shipments",
@@ -296,23 +296,23 @@
     "learning_objectives": [
       "Route Performance",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tampilkan seluruh rute aktif. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return all active routes. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 11
   },
   {
     "id": "KL-12",
     "number": 12,
     "topic": "Route Performance",
-    "title": "Peringkat nilai transaksi rute",
+    "title": "Route transaction value rankings",
     "difficulty": "Intermediate",
-    "business_question": "Rute mana yang menghasilkan transaction value terbesar?",
+    "business_question": "Which routes generate the highest transaction value?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per rute aktif",
+    "analytical_grain": "One row per active route",
     "expected_output": [
       "route_id",
       "transaction_value_idr",
@@ -321,23 +321,23 @@
     "learning_objectives": [
       "Route Performance",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tampilkan seluruh rute aktif. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return all active routes. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 12
   },
   {
     "id": "KL-13",
     "number": 13,
     "topic": "Route Performance",
-    "title": "Biaya rata-rata tertinggi dan terendah",
+    "title": "Highest and lowest average shipment costs",
     "difficulty": "Intermediate",
-    "business_question": "Rute mana yang memiliki average shipment cost tertinggi/terendah?",
+    "business_question": "Which routes have the highest and lowest average shipment costs?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per rute aktif",
+    "analytical_grain": "One row per active route",
     "expected_output": [
       "route_id",
       "avg_cost_idr",
@@ -347,23 +347,23 @@
     "learning_objectives": [
       "Route Performance",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Kedua ranking menggunakan rata-rata yang telah dibulatkan. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use the rounded average for both rankings. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 13
   },
   {
     "id": "KL-14",
     "number": 14,
     "topic": "Route Performance",
-    "title": "Ranking SLA rute",
+    "title": "Route on-time performance rankings",
     "difficulty": "Intermediate",
-    "business_question": "Rute mana yang memiliki on-time rate terbaik dan terburuk?",
+    "business_question": "Which routes have the best and worst on-time rates?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per rute aktif",
+    "analytical_grain": "One row per active route",
     "expected_output": [
       "route_id",
       "eligible_delivered",
@@ -375,24 +375,24 @@
     "learning_objectives": [
       "Route Performance",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tampilkan semua rute aktif; ranking berdasarkan rate yang dibulatkan. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return all active routes and rank them using the rounded on-time rate. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 14
   },
   {
     "id": "KL-15",
     "number": 15,
     "topic": "Route Performance",
-    "title": "Korelasi jarak dan durasi",
+    "title": "Distance and delivery duration correlation",
     "difficulty": "Advanced",
-    "business_question": "Apakah jarak rute berkorelasi dengan delivery duration atau keterlambatan?",
+    "business_question": "Does route distance correlate with delivery duration or lateness?",
     "required_tables": [
       "routes",
       "shipments"
     ],
-    "analytical_grain": "Satu baris keseluruhan",
+    "analytical_grain": "One summary row",
     "expected_output": [
       "eligible_delivered",
       "distance_duration_corr",
@@ -401,23 +401,23 @@
     "learning_objectives": [
       "Route Performance",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Pearson CORR; pembulatan koefisien 4 desimal. Lateness bertanda negatif berarti lebih awal. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use Pearson CORR and round correlation coefficients to 4 decimal places. Negative lateness means early delivery. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 15
   },
   {
     "id": "KL-16",
     "number": 16,
     "topic": "Route Performance",
-    "title": "Risiko lost dan returned per rute",
+    "title": "Loss and return risks by route",
     "difficulty": "Intermediate",
-    "business_question": "Rute mana yang memiliki loss/return rate yang perlu diperhatikan?",
+    "business_question": "Which routes have loss or return rates that deserve attention?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per rute aktif",
+    "analytical_grain": "One row per active route",
     "expected_output": [
       "route_id",
       "shipments",
@@ -429,23 +429,23 @@
     "learning_objectives": [
       "Route Performance",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tampilkan semua rute agar numerator dan denominator dapat ditinjau. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return all routes so the numerators and denominators can be reviewed. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 16
   },
   {
     "id": "KL-17",
     "number": 17,
     "topic": "Route Performance",
-    "title": "Prioritas investigasi rute",
+    "title": "Route investigation priorities",
     "difficulty": "Intermediate",
-    "business_question": "Rute mana yang menjadi kandidat evaluasi harga atau operational improvement?",
+    "business_question": "Which routes are candidates for a pricing review or operational improvement?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per rute aktif",
+    "analytical_grain": "One row per active route",
     "expected_output": [
       "route_id",
       "shipments",
@@ -459,24 +459,24 @@
     "learning_objectives": [
       "Route Performance",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Flag evaluasi jika SLA <80%, loss >=5%, atau return >=10%. Ini prioritas investigasi, bukan bukti profit/rugi. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Flag a route for review if its on-time rate is below 80%, loss rate is at least 5%, or return rate is at least 10%. This identifies investigation priorities, not profit or loss. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 17
   },
   {
     "id": "KL-18",
     "number": 18,
     "topic": "Customer",
-    "title": "Business versus individual",
+    "title": "Business versus individual shipments",
     "difficulty": "Beginner",
-    "business_question": "Berapa proporsi shipment business vs individual?",
+    "business_question": "What proportion of shipments comes from business versus individual customers?",
     "required_tables": [
       "customers",
       "shipments"
     ],
-    "analytical_grain": "Satu baris per customer_type",
+    "analytical_grain": "One row per customer_type",
     "expected_output": [
       "customer_type",
       "shipments",
@@ -485,24 +485,24 @@
     "learning_objectives": [
       "Customer",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Proporsi shipment, bukan proporsi jumlah customer. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Measure the proportion of shipments, not the proportion of customers. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 18
   },
   {
     "id": "KL-19",
     "number": 19,
     "topic": "Customer",
-    "title": "Nilai transaksi per segmen",
+    "title": "Transaction value by customer segment",
     "difficulty": "Intermediate",
-    "business_question": "Segmen mana yang menghasilkan total transaction value terbesar?",
+    "business_question": "Which customer segment generates the highest total transaction value?",
     "required_tables": [
       "customers",
       "shipments"
     ],
-    "analytical_grain": "Satu baris per customer_type",
+    "analytical_grain": "One row per customer_type",
     "expected_output": [
       "customer_type",
       "transaction_value_idr",
@@ -511,24 +511,24 @@
     "learning_objectives": [
       "Customer",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tampilkan semua segmen. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return all customer segments. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 19
   },
   {
     "id": "KL-20",
     "number": 20,
     "topic": "Customer",
-    "title": "Biaya shipment per segmen",
+    "title": "Average shipment cost by customer segment",
     "difficulty": "Beginner",
-    "business_question": "Bagaimana average shipment cost per customer type?",
+    "business_question": "What is the average shipment cost for each customer type?",
     "required_tables": [
       "customers",
       "shipments"
     ],
-    "analytical_grain": "Satu baris per customer_type",
+    "analytical_grain": "One row per customer_type",
     "expected_output": [
       "customer_type",
       "shipments",
@@ -537,24 +537,24 @@
     "learning_objectives": [
       "Customer",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Rata-rata pada grain shipment. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Calculate the average at shipment grain. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 20
   },
   {
     "id": "KL-21",
     "number": 21,
     "topic": "Customer",
-    "title": "Frekuensi shipment pelanggan",
+    "title": "Shipment frequency by customer",
     "difficulty": "Beginner",
-    "business_question": "Bagaimana shipment frequency per customer?",
+    "business_question": "What is the shipment frequency for each customer?",
     "required_tables": [
       "customers",
       "shipments"
     ],
-    "analytical_grain": "Satu baris per customer",
+    "analytical_grain": "One row per customer",
     "expected_output": [
       "customer_id",
       "name",
@@ -563,24 +563,24 @@
     "learning_objectives": [
       "Customer",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Sertakan pelanggan tanpa shipment. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Include customers with no shipments. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 21
   },
   {
     "id": "KL-22",
     "number": 22,
     "topic": "Customer",
-    "title": "Sepuluh pelanggan terbesar",
+    "title": "Top ten customers",
     "difficulty": "Intermediate",
-    "business_question": "Siapa pelanggan dengan volume dan transaction value terbesar?",
+    "business_question": "Which customers have the highest shipment volume and transaction value?",
     "required_tables": [
       "customers",
       "shipments"
     ],
-    "analytical_grain": "Satu baris per top-10 customer",
+    "analytical_grain": "One row per top-ten customer",
     "expected_output": [
       "customer_id",
       "name",
@@ -592,24 +592,24 @@
     "learning_objectives": [
       "Customer",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Ambil tepat 10 pelanggan berdasarkan nilai transaksi DESC, customer_id ASC sebagai tie-breaker; ranking dihitung terhadap semua customer. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Select exactly 10 customers by transaction value DESC, breaking ties by customer_id ASC. Calculate both rankings across all customers before selecting the top 10. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 22
   },
   {
     "id": "KL-23",
     "number": 23,
     "topic": "Customer",
-    "title": "Outcome delivery per segmen",
+    "title": "Delivery outcomes by customer segment",
     "difficulty": "Intermediate",
-    "business_question": "Apakah customer type tertentu memiliki delivery outcome yang berbeda?",
+    "business_question": "Do delivery outcomes differ between customer types?",
     "required_tables": [
       "customers",
       "shipments"
     ],
-    "analytical_grain": "Satu baris per customer_type dan status",
+    "analytical_grain": "One row per customer_type and status",
     "expected_output": [
       "customer_type",
       "status",
@@ -619,23 +619,23 @@
     "learning_objectives": [
       "Customer",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Denominator shipment dalam segmen. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use shipments within each customer segment as the denominator. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 23
   },
   {
     "id": "KL-24",
     "number": 24,
     "topic": "Customer",
-    "title": "Pola pelanggan volume tinggi",
+    "title": "High-volume customer patterns",
     "difficulty": "Intermediate",
-    "business_question": "Apakah pelanggan dengan volume tinggi menunjukkan pola service/route tertentu?",
+    "business_question": "Do high-volume customers show particular service or route preferences?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per top customer, service, route",
+    "analytical_grain": "One row per top customer, service, and route",
     "expected_output": [
       "customer_id",
       "service_type",
@@ -645,23 +645,23 @@
     "learning_objectives": [
       "Customer",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Pilih tepat 10 pelanggan berdasarkan jumlah shipment DESC, customer_id ASC. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Select exactly 10 customers by shipment count DESC, breaking ties by customer_id ASC. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 24
   },
   {
     "id": "KL-25",
     "number": 25,
     "topic": "Package & Weight",
-    "title": "Volume dan nilai jenis paket",
+    "title": "Package volume and transaction value",
     "difficulty": "Beginner",
-    "business_question": "Bagaimana volume dan transaction value berdasarkan package type?",
+    "business_question": "How do shipment volume and transaction value vary by package type?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per package_type",
+    "analytical_grain": "One row per package_type",
     "expected_output": [
       "package_type",
       "shipments",
@@ -670,23 +670,23 @@
     "learning_objectives": [
       "Package & Weight",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Gunakan seluruh shipment. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use all shipments. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 25
   },
   {
     "id": "KL-26",
     "number": 26,
     "topic": "Package & Weight",
-    "title": "Distribusi berat paket",
+    "title": "Package weight distribution",
     "difficulty": "Advanced",
-    "business_question": "Bagaimana distribusi weight_kg per package type?",
+    "business_question": "What is the distribution of weight_kg for each package type?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per package_type",
+    "analytical_grain": "One row per package_type",
     "expected_output": [
       "package_type",
       "shipments",
@@ -699,23 +699,23 @@
     "learning_objectives": [
       "Package & Weight",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Kuartil memakai PERCENTILE_CONT. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Calculate quartiles using PERCENTILE_CONT. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 26
   },
   {
     "id": "KL-27",
     "number": 27,
     "topic": "Package & Weight",
-    "title": "Outlier berat dengan IQR",
+    "title": "Weight outliers using IQR",
     "difficulty": "Advanced",
-    "business_question": "Apakah terdapat berat yang tidak lazim untuk suatu package category?",
+    "business_question": "Are there unusual weights within any package category?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per package_type",
+    "analytical_grain": "One row per package_type",
     "expected_output": [
       "package_type",
       "shipments",
@@ -724,23 +724,23 @@
     "learning_objectives": [
       "Package & Weight",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Outlier di luar pagar Tukey 1,5 IQR dalam setiap kategori; tampilkan kategori dengan nol outlier. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Identify weights outside the Tukey fences of 1.5 IQR within each category. Include categories with no outliers. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 27
   },
   {
     "id": "KL-28",
     "number": 28,
     "topic": "Package & Weight",
-    "title": "Preferensi layanan menurut paket",
+    "title": "Service preferences by package type",
     "difficulty": "Intermediate",
-    "business_question": "Apakah package type tertentu lebih sering menggunakan express atau same-day?",
+    "business_question": "Are certain package types more likely to use express or same-day services?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per package_type dan service_type",
+    "analytical_grain": "One row per package_type and service_type",
     "expected_output": [
       "package_type",
       "service_type",
@@ -750,23 +750,23 @@
     "learning_objectives": [
       "Package & Weight",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tampilkan seluruh kombinasi yang teramati. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return all observed combinations. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 28
   },
   {
     "id": "KL-29",
     "number": 29,
     "topic": "Package & Weight",
-    "title": "Berat, nilai, dan keterlambatan",
+    "title": "Weight, transaction value, and lateness",
     "difficulty": "Intermediate",
-    "business_question": "Apakah shipment yang lebih berat cenderung memiliki transaction value atau keterlambatan lebih tinggi?",
+    "business_question": "Do heavier shipments tend to have higher transaction value or higher late delivery rates?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per kelompok berat",
+    "analytical_grain": "One row per weight band",
     "expected_output": [
       "weight_band",
       "shipments",
@@ -778,23 +778,23 @@
     "learning_objectives": [
       "Package & Weight",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Kelompok: <1, 1 sampai 5 inklusif, >5 kg. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use these weight bands: below 1 kg, 1 to 5 kg inclusive, and above 5 kg. Return the labels '<1 kg', '1-5 kg', and '>5 kg'. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 29
   },
   {
     "id": "KL-30",
     "number": 30,
     "topic": "SLA & Delivery",
-    "title": "SLA on-time per layanan",
+    "title": "On-time rates by service",
     "difficulty": "Intermediate",
-    "business_question": "Berapa on-time rate berdasarkan service type?",
+    "business_question": "What is the on-time rate for each service type?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per layanan",
+    "analytical_grain": "One row per service",
     "expected_output": [
       "service_type",
       "eligible_delivered",
@@ -804,23 +804,23 @@
     "learning_objectives": [
       "SLA & Delivery",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tampilkan eligible denominator dan on-time numerator. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return the eligible-delivery denominator and the on-time numerator. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 30
   },
   {
     "id": "KL-31",
     "number": 31,
     "topic": "SLA & Delivery",
-    "title": "Rata-rata dan median keterlambatan",
+    "title": "Average and median delivery delay",
     "difficulty": "Intermediate",
-    "business_question": "Berapa rata-rata dan median keterlambatan shipment yang terlambat?",
+    "business_question": "What are the average and median delays for late shipments?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris keseluruhan",
+    "analytical_grain": "One summary row",
     "expected_output": [
       "late_deliveries",
       "avg_late_days",
@@ -829,23 +829,23 @@
     "learning_objectives": [
       "SLA & Delivery",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Hanya eligible delivered yang terlambat. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Include only eligible delivered shipments that arrived late. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 31
   },
   {
     "id": "KL-32",
     "number": 32,
     "topic": "SLA & Delivery",
-    "title": "Keterlambatan route-service",
+    "title": "Late deliveries by route and service",
     "difficulty": "Intermediate",
-    "business_question": "Rute/service mana yang paling sering terlambat?",
+    "business_question": "Which route and service combinations have the most late deliveries?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per route dan service aktif",
+    "analytical_grain": "One row per active route and service combination",
     "expected_output": [
       "route_id",
       "service_type",
@@ -856,23 +856,23 @@
     "learning_objectives": [
       "SLA & Delivery",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tampilkan semua kombinasi aktif, termasuk nol late. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return all active combinations, including those with no late deliveries. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 32
   },
   {
     "id": "KL-33",
     "number": 33,
     "topic": "SLA & Delivery",
-    "title": "Durasi aktual versus estimasi",
+    "title": "Actual versus estimated delivery duration",
     "difficulty": "Intermediate",
-    "business_question": "Apakah delivery duration aktual berbeda signifikan dari estimated delivery?",
+    "business_question": "Does actual delivery duration differ substantially from the estimated duration?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per layanan",
+    "analytical_grain": "One row per service",
     "expected_output": [
       "service_type",
       "eligible_delivered",
@@ -883,23 +883,23 @@
     "learning_objectives": [
       "SLA & Delivery",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Perbandingan deskriptif berpasangan pada eligible delivered; bukan uji signifikansi statistik. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use a descriptive paired comparison of eligible delivered shipments. This is not a statistical significance test. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 33
   },
   {
     "id": "KL-34",
     "number": 34,
     "topic": "SLA & Delivery",
-    "title": "Delivered tanpa tanggal aktual",
+    "title": "Delivered shipments without actual delivery dates",
     "difficulty": "Beginner",
-    "business_question": "Berapa proporsi delivered shipment yang tidak memiliki actual_delivery?",
+    "business_question": "What proportion of delivered shipments is missing actual_delivery?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris keseluruhan",
+    "analytical_grain": "One summary row",
     "expected_output": [
       "delivered_shipments",
       "missing_actual_delivery",
@@ -908,24 +908,24 @@
     "learning_objectives": [
       "SLA & Delivery",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Denominator hanya status delivered. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use only shipments with status delivered as the denominator. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 34
   },
   {
     "id": "KL-35",
     "number": 35,
     "topic": "SLA & Delivery",
-    "title": "Konflik status dan tracking",
+    "title": "Shipment status and tracking conflicts",
     "difficulty": "Intermediate",
-    "business_question": "Apakah ada konflik antara status shipment, actual_delivery, dan status history?",
+    "business_question": "Are there conflicts between shipment status, actual_delivery, and status history?",
     "required_tables": [
       "shipments",
       "status_history"
     ],
-    "analytical_grain": "Satu baris ringkasan audit",
+    "analytical_grain": "One audit summary row",
     "expected_output": [
       "delivered_missing_date",
       "non_delivered_with_date",
@@ -935,24 +935,24 @@
     "learning_objectives": [
       "SLA & Delivery",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Konflik event berdasarkan keberadaan event delivered, bukan hanya event terakhir. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Check conflicts using the presence of a delivered event, rather than only the latest event. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 35
   },
   {
     "id": "KL-36",
     "number": 36,
     "topic": "Tracking & Operations",
-    "title": "Jumlah event rata-rata",
+    "title": "Average tracking event count",
     "difficulty": "Intermediate",
-    "business_question": "Berapa rata-rata jumlah status event per shipment?",
+    "business_question": "What is the average number of status events per shipment?",
     "required_tables": [
       "shipments",
       "status_history"
     ],
-    "analytical_grain": "Satu baris keseluruhan",
+    "analytical_grain": "One summary row",
     "expected_output": [
       "shipments",
       "avg_events_per_shipment"
@@ -960,23 +960,23 @@
     "learning_objectives": [
       "Tracking & Operations",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Sertakan shipment tanpa histori sebagai nol event. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Include shipments without history as having zero events. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 36
   },
   {
     "id": "KL-37",
     "number": 37,
     "topic": "Tracking & Operations",
-    "title": "Frekuensi status event",
+    "title": "Status event frequency",
     "difficulty": "Beginner",
-    "business_question": "Status/event apa yang paling sering muncul?",
+    "business_question": "Which status events occur most frequently?",
     "required_tables": [
       "status_history"
     ],
-    "analytical_grain": "Satu baris per status event",
+    "analytical_grain": "One row per event status",
     "expected_output": [
       "status",
       "events",
@@ -985,47 +985,47 @@
     "learning_objectives": [
       "Tracking & Operations",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Grain event; denominator semua event. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use event grain and all events as the denominator. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 37
   },
   {
     "id": "KL-38",
     "number": 38,
     "topic": "Tracking & Operations",
-    "title": "Shipment dengan failed delivery",
+    "title": "Shipments with failed delivery attempts",
     "difficulty": "Beginner",
-    "business_question": "Berapa banyak shipment yang mengalami failed delivery?",
+    "business_question": "How many shipments have experienced a failed delivery attempt?",
     "required_tables": [
       "status_history"
     ],
-    "analytical_grain": "Satu baris keseluruhan",
+    "analytical_grain": "One summary row",
     "expected_output": [
       "failed_delivery_shipments"
     ],
     "learning_objectives": [
       "Tracking & Operations",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Hitung shipment unik, bukan jumlah event. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Count distinct shipments, not events. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 38
   },
   {
     "id": "KL-39",
     "number": 39,
     "topic": "Tracking & Operations",
-    "title": "Frekuensi lokasi tracking",
+    "title": "Tracking location frequency",
     "difficulty": "Beginner",
-    "business_question": "Lokasi/hub mana yang paling sering muncul pada tracking event?",
+    "business_question": "Which locations or hubs appear most frequently in tracking events?",
     "required_tables": [
       "shipments",
       "status_history"
     ],
-    "analytical_grain": "Satu baris per lokasi",
+    "analytical_grain": "One row per location",
     "expected_output": [
       "location",
       "events",
@@ -1034,23 +1034,23 @@
     "learning_objectives": [
       "Tracking & Operations",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tampilkan seluruh lokasi termasuk NULL jika ada. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return all locations, including NULL if present. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 39
   },
   {
     "id": "KL-40",
     "number": 40,
     "topic": "Tracking & Operations",
-    "title": "Transit pickup ke delivered",
+    "title": "Transit time from pickup to delivery",
     "difficulty": "Intermediate",
-    "business_question": "Berapa lama rata-rata waktu dari pickup_confirmed ke delivered?",
+    "business_question": "What is the average time from pickup_confirmed to delivered?",
     "required_tables": [
       "status_history"
     ],
-    "analytical_grain": "Satu baris keseluruhan",
+    "analytical_grain": "One summary row",
     "expected_output": [
       "eligible_shipments",
       "avg_transit_hours"
@@ -1058,24 +1058,24 @@
     "learning_objectives": [
       "Tracking & Operations",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Pakai event pertama pickup dan delivered, hanya pasangan lengkap dengan durasi nonnegatif. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use the first pickup and first delivered event. Include only complete pairs with nonnegative durations. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 40
   },
   {
     "id": "KL-41",
     "number": 41,
     "topic": "Tracking & Operations",
-    "title": "Pola event shipment bermasalah",
+    "title": "Event patterns for problem shipments",
     "difficulty": "Advanced",
-    "business_question": "Untuk shipment bermasalah, event sequence apa yang paling umum?",
+    "business_question": "What are the most common event sequences for problem shipments?",
     "required_tables": [
       "shipments",
       "status_history"
     ],
-    "analytical_grain": "Satu baris per urutan event",
+    "analytical_grain": "One row per event sequence",
     "expected_output": [
       "event_sequence",
       "shipments"
@@ -1083,23 +1083,23 @@
     "learning_objectives": [
       "Tracking & Operations",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Bermasalah = status shipment lost atau returned. Urut timestamp lalu record_id. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Problem shipments have shipment status lost or returned. Order events by timestamp, then record_id. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 41
   },
   {
     "id": "KL-42",
     "number": 42,
     "topic": "Tracking & Operations",
-    "title": "Audit urutan event",
+    "title": "Event sequence audit",
     "difficulty": "Advanced",
-    "business_question": "Apakah ada shipment dengan urutan status yang tidak wajar?",
+    "business_question": "Are there shipments with unusual status sequences?",
     "required_tables": [
       "status_history"
     ],
-    "analytical_grain": "Satu baris ringkasan audit",
+    "analytical_grain": "One audit summary row",
     "expected_output": [
       "shipments_with_event_after_terminal",
       "shipments_not_starting_with_pickup"
@@ -1107,25 +1107,25 @@
     "learning_objectives": [
       "Tracking & Operations",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Terminal = delivered, lost, returned_to_sender; event apapun sesudah terminal ditandai. Tie-break record_id. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Terminal statuses are delivered, lost, and returned_to_sender. Flag any event after a terminal status. Break timestamp ties using record_id. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 42
   },
   {
     "id": "KL-43",
     "number": 43,
     "topic": "Data Quality Audit",
-    "title": "Validasi customer dan route",
+    "title": "Customer and route validity",
     "difficulty": "Beginner",
-    "business_question": "Apakah semua shipment memiliki customer dan route yang valid?",
+    "business_question": "Does every shipment reference a valid customer and route?",
     "required_tables": [
       "customers",
       "routes",
       "shipments"
     ],
-    "analytical_grain": "Satu baris ringkasan audit",
+    "analytical_grain": "One audit summary row",
     "expected_output": [
       "total_shipments",
       "missing_customer",
@@ -1134,23 +1134,23 @@
     "learning_objectives": [
       "Data Quality Audit",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "LEFT JOIN mempertahankan shipment orphan. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use LEFT JOIN to retain orphan shipments. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 43
   },
   {
     "id": "KL-44",
     "number": 44,
     "topic": "Data Quality Audit",
-    "title": "Keunikan tracking number",
+    "title": "Tracking number uniqueness",
     "difficulty": "Beginner",
-    "business_question": "Apakah tracking_number unik?",
+    "business_question": "Are tracking_number values unique?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris keseluruhan",
+    "analytical_grain": "One summary row",
     "expected_output": [
       "shipments",
       "non_null_tracking_numbers",
@@ -1160,26 +1160,26 @@
     "learning_objectives": [
       "Data Quality Audit",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Duplicate excess = non-null count minus distinct non-null count. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Duplicate excess equals the non-NULL count minus the distinct non-NULL count. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 44
   },
   {
     "id": "KL-45",
     "number": 45,
     "topic": "Data Quality Audit",
-    "title": "Missing value setiap kolom",
+    "title": "Missing values in every column",
     "difficulty": "Advanced",
-    "business_question": "Berapa banyak missing value pada setiap tabel?",
+    "business_question": "How many missing values are there in each table?",
     "required_tables": [
       "customers",
       "routes",
       "shipments",
       "status_history"
     ],
-    "analytical_grain": "Satu baris per tabel dan kolom",
+    "analytical_grain": "One row per table and column",
     "expected_output": [
       "table_name",
       "column_name",
@@ -1189,23 +1189,23 @@
     "learning_objectives": [
       "Data Quality Audit",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Missing = SQL NULL atau string kosong; tampilkan juga kolom tanpa missing. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Treat SQL NULL and empty strings as missing. Include columns with no missing values. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 45
   },
   {
     "id": "KL-46",
     "number": 46,
     "topic": "Data Quality Audit",
-    "title": "Audit tanggal aktual delivered",
+    "title": "Actual delivery date audit",
     "difficulty": "Beginner",
-    "business_question": "Apakah shipment berstatus delivered selalu memiliki actual_delivery?",
+    "business_question": "Do delivered shipments always have an actual_delivery date?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per status",
+    "analytical_grain": "One row per shipment status",
     "expected_output": [
       "status",
       "shipments",
@@ -1214,23 +1214,23 @@
     "learning_objectives": [
       "Data Quality Audit",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tampilkan semua status untuk membandingkan missing yang wajar dan anomali. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return all statuses to compare expected missing dates with anomalies. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 46
   },
   {
     "id": "KL-47",
     "number": 47,
     "topic": "Data Quality Audit",
-    "title": "Audit kewajaran tanggal",
+    "title": "Delivery date sanity checks",
     "difficulty": "Intermediate",
-    "business_question": "Apakah actual_delivery masuk akal dibanding pickup_date dan estimated_delivery?",
+    "business_question": "Are actual_delivery dates reasonable relative to pickup_date and estimated_delivery?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris ringkasan audit",
+    "analytical_grain": "One audit summary row",
     "expected_output": [
       "estimated_before_pickup",
       "actual_before_pickup",
@@ -1240,24 +1240,24 @@
     "learning_objectives": [
       "Data Quality Audit",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Actual sesudah estimasi adalah terlambat, bukan otomatis data tidak valid. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "An actual date after the estimated date indicates lateness; it does not automatically mean the data is invalid. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 47
   },
   {
     "id": "KL-48",
     "number": 48,
     "topic": "Data Quality Audit",
-    "title": "Cakupan histori tracking",
+    "title": "Tracking history coverage",
     "difficulty": "Intermediate",
-    "business_question": "Apakah ada shipment tanpa histori tracking?",
+    "business_question": "Are there shipments without tracking history?",
     "required_tables": [
       "shipments",
       "status_history"
     ],
-    "analytical_grain": "Satu baris keseluruhan",
+    "analytical_grain": "One summary row",
     "expected_output": [
       "total_shipments",
       "with_tracking",
@@ -1266,26 +1266,26 @@
     "learning_objectives": [
       "Data Quality Audit",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Satu shipment dihitung sekali walaupun memiliki banyak event. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Count each shipment once, even when it has multiple tracking events. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 48
   },
   {
     "id": "KL-49",
     "number": 49,
     "topic": "Data Quality Audit",
-    "title": "Audit duplikat dan foreign key",
+    "title": "Duplicate and foreign key audit",
     "difficulty": "Intermediate",
-    "business_question": "Apakah ada duplicate record atau foreign key yang tidak match?",
+    "business_question": "Are there duplicate records or unmatched foreign keys?",
     "required_tables": [
       "customers",
       "routes",
       "shipments",
       "status_history"
     ],
-    "analytical_grain": "Satu baris per pemeriksaan",
+    "analytical_grain": "One row per audit check",
     "expected_output": [
       "check_name",
       "issue_count"
@@ -1293,23 +1293,23 @@
     "learning_objectives": [
       "Data Quality Audit",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tujuh pemeriksaan; duplicate = kelebihan baris kunci, bukan duplikat isi non-key. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return seven checks. Duplicate counts measure excess primary-key rows, not repeated non-key content. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 49
   },
   {
     "id": "KL-50",
     "number": 50,
     "topic": "Data Quality Audit",
-    "title": "Dampak missing tanggal pada SLA",
+    "title": "Impact of missing dates on on-time rates",
     "difficulty": "Intermediate",
-    "business_question": "Apa dampak data-quality issue terhadap KPI delivery dan SLA?",
+    "business_question": "How do data quality issues affect delivery and on-time KPIs?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris keseluruhan",
+    "analytical_grain": "One summary row",
     "expected_output": [
       "delivered_shipments",
       "eligible_delivered",
@@ -1320,23 +1320,23 @@
     "learning_objectives": [
       "Data Quality Audit",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Bandingkan denominator valid dan naive seluruh delivered. Angka naive hanya untuk audit bias. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Compare the eligible-delivery denominator with the naive denominator of all delivered shipments. Use the naive rate only to audit bias. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 50
   },
   {
     "id": "KL-51",
     "number": 51,
     "topic": "Dashboard / Management",
-    "title": "Scorecard operations manager",
+    "title": "Operations manager scorecard",
     "difficulty": "Intermediate",
-    "business_question": "KPI apa yang paling relevan untuk dashboard operations manager?",
+    "business_question": "Which KPIs are most relevant to an operations manager's dashboard?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per layanan",
+    "analytical_grain": "One row per service",
     "expected_output": [
       "service_type",
       "shipments",
@@ -1353,24 +1353,24 @@
     "learning_objectives": [
       "Dashboard / Management",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Outputkan metrik layanan lengkap: volume, value, biaya, berat, SLA, delivery/loss/return. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return the complete service metrics: volume, transaction value, cost, weight, on-time performance, and delivery, loss, and return rates. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 51
   },
   {
     "id": "KL-52",
     "number": 52,
     "topic": "Dashboard / Management",
-    "title": "Outlier multidimensi",
+    "title": "Outliers across business dimensions",
     "difficulty": "Advanced",
-    "business_question": "Service, route, customer segment, dan periode mana yang menjadi outlier?",
+    "business_question": "Which services, routes, customer segments, and periods are outliers?",
     "required_tables": [
       "customers",
       "shipments"
     ],
-    "analytical_grain": "Satu baris per kategori dimensi",
+    "analytical_grain": "One row per dimension category",
     "expected_output": [
       "dimension",
       "dimension_value",
@@ -1381,23 +1381,23 @@
     "learning_objectives": [
       "Dashboard / Management",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tampilkan semua kategori dalam empat dimensi. Outlier dioperasionalkan sebagai ranking late rate, bukan uji statistik. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return all categories across the four dimensions. Identify outliers using late-rate rankings, not a statistical outlier test. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 52
   },
   {
     "id": "KL-53",
     "number": 53,
     "topic": "Dashboard / Management",
-    "title": "Area investigasi operasional",
+    "title": "Areas for operational investigation",
     "difficulty": "Intermediate",
-    "business_question": "Area mana yang membutuhkan investigasi operasional lebih lanjut?",
+    "business_question": "Which areas require further operational investigation?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per rute yang perlu review",
+    "analytical_grain": "One row per route requiring review",
     "expected_output": [
       "route_id",
       "shipments",
@@ -1409,23 +1409,23 @@
     "learning_objectives": [
       "Dashboard / Management",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Filter volume >=30 dan setidaknya satu kondisi SLA <80%, loss >=5%, return >=10%. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Include routes with volume at least 30 and at least one of these conditions: on-time rate below 80%, loss rate at least 5%, or return rate at least 10%. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 53
   },
   {
     "id": "KL-54",
     "number": 54,
     "topic": "Dashboard / Management",
-    "title": "Prioritas peningkatan on-time",
+    "title": "Priorities for improving on-time delivery",
     "difficulty": "Intermediate",
-    "business_question": "Insight apa yang paling actionable untuk meningkatkan on-time delivery?",
+    "business_question": "Which insights are most actionable for improving on-time delivery?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per top-10 route-service",
+    "analytical_grain": "One row per top-ten route and service combination",
     "expected_output": [
       "route_id",
       "service_type",
@@ -1436,23 +1436,23 @@
     "learning_objectives": [
       "Dashboard / Management",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Prioritas tepat 10 kombinasi dengan late count terbesar; tie-break route_id, service_type ASC. Ini kandidat investigasi, bukan rekomendasi kausal. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Select exactly 10 combinations with the most late deliveries. Break ties by route_id, then service_type ASC. These are investigation candidates, not causal recommendations. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 54
   },
   {
     "id": "KL-55",
     "number": 55,
     "topic": "Dashboard / Management",
-    "title": "Scorecard layanan per bulan",
+    "title": "Monthly service scorecard",
     "difficulty": "Intermediate",
-    "business_question": "Bagaimana membangun scorecard yang menggabungkan volume, value, SLA, loss, dan return tanpa mengaburkan definisi masing-masing metrik?",
+    "business_question": "How can a scorecard combine volume, value, on-time performance, loss, and returns while keeping each metric's definition clear?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per service dan bulan",
+    "analytical_grain": "One row per service and month",
     "expected_output": [
       "pickup_month",
       "service_type",
@@ -1467,23 +1467,23 @@
     "learning_objectives": [
       "Dashboard / Management",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Denominator loss/return semua shipment dalam bulan-layanan; SLA eligible delivered. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use all shipments within each service-month as the loss and return denominator. Use eligible delivered shipments for the on-time denominator. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": 55
   },
   {
     "id": "KL-56",
     "number": 56,
-    "topic": "Tren & Window Functions",
-    "title": "Pertumbuhan month-over-month",
+    "topic": "Trends & Window Functions",
+    "title": "Month-over-month growth",
     "difficulty": "Advanced",
-    "business_question": "Bagaimana pertumbuhan volume dan nilai transaksi month-over-month?",
+    "business_question": "What is the month-over-month growth in shipment volume and transaction value?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per bulan",
+    "analytical_grain": "One row per month",
     "expected_output": [
       "pickup_month",
       "shipments",
@@ -1494,75 +1494,75 @@
       "value_growth_pct"
     ],
     "learning_objectives": [
-      "Tren & Window Functions",
+      "Trends & Window Functions",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "LAG berdasarkan bulan pickup; bulan pertama memiliki growth NULL. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Apply LAG in pickup-month order. Growth is NULL for the first month. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-57",
     "number": 57,
-    "topic": "Tren & Window Functions",
-    "title": "Rolling average tiga bulan",
+    "topic": "Trends & Window Functions",
+    "title": "Three-month rolling average",
     "difficulty": "Advanced",
-    "business_question": "Bagaimana rolling average tiga bulan untuk volume shipment?",
+    "business_question": "What is the three-month rolling average of shipment volume?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per bulan",
+    "analytical_grain": "One row per month",
     "expected_output": [
       "pickup_month",
       "shipments",
       "rolling_3_month_avg"
     ],
     "learning_objectives": [
-      "Tren & Window Functions",
+      "Trends & Window Functions",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Jendela sampai 3 bulan teramati; dua bulan pertama memakai jendela parsial. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use a window of up to three observed months. Use partial windows for the first two months. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-58",
     "number": 58,
-    "topic": "Tren & Window Functions",
-    "title": "Nilai transaksi kumulatif",
+    "topic": "Trends & Window Functions",
+    "title": "Cumulative transaction value",
     "difficulty": "Intermediate",
-    "business_question": "Berapa nilai transaksi kumulatif per bulan sepanjang periode dataset?",
+    "business_question": "What is the cumulative transaction value by month across the dataset period?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per bulan",
+    "analytical_grain": "One row per month",
     "expected_output": [
       "pickup_month",
       "transaction_value_idr",
       "cumulative_value_idr"
     ],
     "learning_objectives": [
-      "Tren & Window Functions",
+      "Trends & Window Functions",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Kumulatif sepanjang dataset, tidak direset per tahun. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Accumulate across the entire dataset without resetting at the start of each year. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-59",
     "number": 59,
-    "topic": "Tren & Window Functions",
-    "title": "Top tiga rute bulanan",
+    "topic": "Trends & Window Functions",
+    "title": "Top three routes each month",
     "difficulty": "Advanced",
-    "business_question": "Apa tiga rute dengan volume tertinggi pada setiap bulan?",
+    "business_question": "What are the three highest-volume routes in each month?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per bulan dan rute terpilih",
+    "analytical_grain": "One row per month and selected route",
     "expected_output": [
       "pickup_month",
       "route_id",
@@ -1570,25 +1570,25 @@
       "route_rank"
     ],
     "learning_objectives": [
-      "Tren & Window Functions",
+      "Trends & Window Functions",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tepat tiga per bulan; ties diputuskan route_id ASC. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return exactly three routes per month. Break ties by route_id ASC. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-60",
     "number": 60,
-    "topic": "Tren & Window Functions",
-    "title": "Pola hari pickup",
+    "topic": "Trends & Window Functions",
+    "title": "Pickup weekday patterns",
     "difficulty": "Intermediate",
-    "business_question": "Bagaimana volume, late rate, dan nilai transaksi menurut hari pickup?",
+    "business_question": "How do shipment volume, late delivery rate, and transaction value vary by pickup weekday?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per ISO weekday",
+    "analytical_grain": "One row per ISO weekday",
     "expected_output": [
       "pickup_weekday",
       "shipments",
@@ -1598,25 +1598,25 @@
       "late_rate_pct"
     ],
     "learning_objectives": [
-      "Tren & Window Functions",
+      "Trends & Window Functions",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "ISO weekday: 1 Senin sampai 7 Minggu. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use ISO weekday numbers: 1 for Monday through 7 for Sunday. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-61",
     "number": 61,
     "topic": "Customer & Cohort",
-    "title": "Pelanggan shipment pertama",
+    "title": "Customers making their first shipment",
     "difficulty": "Intermediate",
-    "business_question": "Berapa jumlah pelanggan baru yang melakukan shipment pertama setiap bulan?",
+    "business_question": "How many new customers make their first shipment each month?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per bulan pertama aktif",
+    "analytical_grain": "One row per first active month",
     "expected_output": [
       "first_shipment_month",
       "new_active_customers"
@@ -1624,23 +1624,23 @@
     "learning_objectives": [
       "Customer & Cohort",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Baru berarti shipment pertama yang teramati, bukan registration_date. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "New means the first observed shipment, not registration_date. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-62",
     "number": 62,
     "topic": "Customer & Cohort",
-    "title": "Retensi satu bulan cohort",
+    "title": "Next-month customer retention",
     "difficulty": "Advanced",
-    "business_question": "Bagaimana retensi pelanggan pada bulan berikutnya setelah bulan shipment pertama?",
+    "business_question": "What is customer retention in the month after the first-shipment month?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per cohort matang",
+    "analytical_grain": "One row per mature cohort",
     "expected_output": [
       "cohort_month",
       "cohort_customers",
@@ -1650,23 +1650,23 @@
     "learning_objectives": [
       "Customer & Cohort",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Keluarkan cohort pada bulan terakhir dataset karena observasi bulan berikutnya belum tersedia. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Exclude cohorts in the final dataset month because their next-month activity is not yet observable. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-63",
     "number": 63,
     "topic": "Customer & Cohort",
-    "title": "Pelanggan tidak aktif 90 hari",
+    "title": "Customers inactive for over 90 days",
     "difficulty": "Intermediate",
-    "business_question": "Siapa pelanggan tidak aktif selama lebih dari 90 hari relatif terhadap pickup terakhir dataset?",
+    "business_question": "Which customers have been inactive for more than 90 days relative to the latest pickup date in the dataset?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per pelanggan tidak aktif",
+    "analytical_grain": "One row per inactive customer",
     "expected_output": [
       "customer_id",
       "last_pickup",
@@ -1675,24 +1675,24 @@
     "learning_objectives": [
       "Customer & Cohort",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Hanya pelanggan yang pernah mengirim; anchor adalah MAX(pickup_date), bukan tanggal komputer. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Include only customers who have shipped before. Use MAX(pickup_date) as the reference date, not the computer's current date. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-64",
     "number": 64,
     "topic": "Customer & Cohort",
-    "title": "Kontribusi pelanggan per desil",
+    "title": "Customer value contribution by decile",
     "difficulty": "Advanced",
-    "business_question": "Bagaimana kontribusi nilai transaksi pelanggan menurut kelompok desil?",
+    "business_question": "How does customer transaction value contribution vary by decile?",
     "required_tables": [
       "customers",
       "shipments"
     ],
-    "analytical_grain": "Satu baris per desil",
+    "analytical_grain": "One row per decile",
     "expected_output": [
       "value_decile",
       "customers",
@@ -1702,23 +1702,23 @@
     "learning_objectives": [
       "Customer & Cohort",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Desil 1 adalah pelanggan bernilai tertinggi; hanya customer aktif. Ties customer_id ASC. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Decile 1 contains the highest-value customers. Include active customers only and break ties by customer_id ASC. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-65",
     "number": 65,
     "topic": "Customer & Cohort",
-    "title": "Pelanggan multilarayanan",
+    "title": "Customers using multiple services",
     "difficulty": "Intermediate",
-    "business_question": "Berapa porsi pelanggan yang menggunakan lebih dari satu jenis layanan?",
+    "business_question": "What proportion of customers uses more than one service type?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris keseluruhan",
+    "analytical_grain": "One summary row",
     "expected_output": [
       "active_customers",
       "multi_service_customers",
@@ -1727,48 +1727,48 @@
     "learning_objectives": [
       "Customer & Cohort",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Denominator seluruh customer yang pernah mengirim. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use all customers who have made at least one shipment as the denominator. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-66",
     "number": 66,
-    "topic": "Tracking Lanjutan",
-    "title": "Frekuensi transisi status",
+    "topic": "Advanced Tracking",
+    "title": "Tracking status transition frequency",
     "difficulty": "Advanced",
-    "business_question": "Bagaimana transisi antarstatus tracking dan frekuensinya?",
+    "business_question": "What tracking status transitions occur, and how frequently?",
     "required_tables": [
       "status_history"
     ],
-    "analytical_grain": "Satu baris per pasangan status",
+    "analytical_grain": "One row per status pair",
     "expected_output": [
       "previous_status",
       "next_status",
       "transitions"
     ],
     "learning_objectives": [
-      "Tracking Lanjutan",
+      "Advanced Tracking",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Urutan timestamp dan record_id; event pertama tidak punya transisi asal. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Order by timestamp, then record_id. The first event has no preceding transition. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-67",
     "number": 67,
-    "topic": "Tracking Lanjutan",
-    "title": "Waktu antarstatus tracking",
+    "topic": "Advanced Tracking",
+    "title": "Time between tracking statuses",
     "difficulty": "Advanced",
-    "business_question": "Berapa rata-rata jeda jam antar-event menurut status asal dan tujuan?",
+    "business_question": "What is the average interval in hours between events for each origin and destination status pair?",
     "required_tables": [
       "status_history"
     ],
-    "analytical_grain": "Satu baris per pasangan status",
+    "analytical_grain": "One row per status pair",
     "expected_output": [
       "previous_status",
       "next_status",
@@ -1776,50 +1776,50 @@
       "avg_gap_hours"
     ],
     "learning_objectives": [
-      "Tracking Lanjutan",
+      "Advanced Tracking",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Sertakan jeda nol jam; tidak menghitung event pertama. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Include zero-hour intervals. Exclude the first event from interval calculations. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-68",
     "number": 68,
-    "topic": "Tracking Lanjutan",
-    "title": "Pemulihan failed delivery",
+    "topic": "Advanced Tracking",
+    "title": "Recovery after failed delivery",
     "difficulty": "Intermediate",
-    "business_question": "Berapa shipment dengan failed delivery yang kemudian memiliki event delivered?",
+    "business_question": "How many shipments have a failed delivery event followed by a delivered event?",
     "required_tables": [
       "status_history"
     ],
-    "analytical_grain": "Satu baris keseluruhan",
+    "analytical_grain": "One summary row",
     "expected_output": [
       "failed_shipments",
       "recovered_shipments"
     ],
     "learning_objectives": [
-      "Tracking Lanjutan",
+      "Advanced Tracking",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Recovered = delivered timestamp lebih besar daripada timestamp failed pertama, status akhir shipment tidak dipakai. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "A recovered shipment has a delivered timestamp strictly after its first failed-delivery timestamp. Do not use the final shipment status. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-69",
     "number": 69,
-    "topic": "Tracking Lanjutan",
-    "title": "Kesesuaian status terakhir",
+    "topic": "Advanced Tracking",
+    "title": "Consistency with the latest tracking status",
     "difficulty": "Intermediate",
-    "business_question": "Bagaimana kesesuaian status shipment dengan event tracking terakhir?",
+    "business_question": "How closely does shipment status match the latest tracking event?",
     "required_tables": [
       "shipments",
       "status_history"
     ],
-    "analytical_grain": "Satu baris per status shipment dan latest event",
+    "analytical_grain": "One row per shipment status and latest event status",
     "expected_output": [
       "shipment_status",
       "last_event_status",
@@ -1827,25 +1827,25 @@
       "status_matches"
     ],
     "learning_objectives": [
-      "Tracking Lanjutan",
+      "Advanced Tracking",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Mapping returned ke returned_to_sender; status lain exact match. NULL history menghasilkan NULL match. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Map returned to returned_to_sender and use exact matches for other statuses. Missing history produces a NULL match value. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-70",
     "number": 70,
-    "topic": "Tracking Lanjutan",
-    "title": "Missing data tracking per status",
+    "topic": "Advanced Tracking",
+    "title": "Missing tracking data by status",
     "difficulty": "Beginner",
-    "business_question": "Berapa banyak event tracking dengan timestamp atau lokasi kosong per status?",
+    "business_question": "How many tracking events have a missing timestamp or location for each status?",
     "required_tables": [
       "status_history"
     ],
-    "analytical_grain": "Satu baris per status event",
+    "analytical_grain": "One row per event status",
     "expected_output": [
       "status",
       "events",
@@ -1853,26 +1853,26 @@
       "missing_location"
     ],
     "learning_objectives": [
-      "Tracking Lanjutan",
+      "Advanced Tracking",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Missing lokasi meliputi NULL dan string kosong. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "A missing location is either NULL or an empty string. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-71",
     "number": 71,
-    "topic": "Analitik Lanjutan",
-    "title": "Tarif aktual versus katalog",
+    "topic": "Advanced Analytics",
+    "title": "Actual versus catalog prices",
     "difficulty": "Intermediate",
-    "business_question": "Bagaimana perbandingan tarif transaksi per kg dengan tarif katalog regular dan express?",
+    "business_question": "How does the transaction price per kg compare with the catalog price for regular and express services?",
     "required_tables": [
       "routes",
       "shipments"
     ],
-    "analytical_grain": "Satu baris per regular/express",
+    "analytical_grain": "One row per regular or express service",
     "expected_output": [
       "service_type",
       "shipments",
@@ -1881,51 +1881,51 @@
       "avg_gap_per_kg"
     ],
     "learning_objectives": [
-      "Analitik Lanjutan",
+      "Advanced Analytics",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Rata-rata sederhana per shipment; bukan weighted average. Gap tidak diasumsikan sebagai kesalahan penagihan. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use a simple average across shipments, not a weighted average. A price gap does not necessarily indicate a billing error. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-72",
     "number": 72,
-    "topic": "Analitik Lanjutan",
-    "title": "Estimasi same-day",
+    "topic": "Advanced Analytics",
+    "title": "Same-day delivery estimates",
     "difficulty": "Beginner",
-    "business_question": "Berapa shipment same_day dengan estimasi delivery berbeda dari tanggal pickup?",
+    "business_question": "How many same_day shipments have an estimated delivery date different from the pickup date?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris keseluruhan",
+    "analytical_grain": "One summary row",
     "expected_output": [
       "same_day_shipments",
       "estimate_not_same_day",
       "missing_dates"
     ],
     "learning_objectives": [
-      "Analitik Lanjutan",
+      "Advanced Analytics",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Periksa estimasi, bukan actual_delivery; NULL dipisah. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Check estimated_delivery, not actual_delivery. Count missing dates separately. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-73",
     "number": 73,
-    "topic": "Analitik Lanjutan",
-    "title": "Durasi estimasi versus katalog",
+    "topic": "Advanced Analytics",
+    "title": "Estimated duration versus route catalog",
     "difficulty": "Intermediate",
-    "business_question": "Bagaimana selisih estimasi durasi shipment dengan estimasi katalog rute untuk regular dan express?",
+    "business_question": "How do shipment duration estimates differ from route catalog estimates for regular and express services?",
     "required_tables": [
       "routes",
       "shipments"
     ],
-    "analytical_grain": "Satu baris per regular/express",
+    "analytical_grain": "One row per regular or express service",
     "expected_output": [
       "service_type",
       "shipments",
@@ -1934,25 +1934,25 @@
       "different_estimates"
     ],
     "learning_objectives": [
-      "Analitik Lanjutan",
+      "Advanced Analytics",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Selisih hari kalender; tidak mengasumsikan hari kerja. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Use calendar-day differences. Do not assume business days. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-74",
     "number": 74,
-    "topic": "Analitik Lanjutan",
-    "title": "Top lima kontribusi rute per layanan",
+    "topic": "Advanced Analytics",
+    "title": "Top five route value contributions by service",
     "difficulty": "Advanced",
-    "business_question": "Apa lima rute dengan konsentrasi nilai transaksi terbesar di masing-masing layanan?",
+    "business_question": "Which five routes contribute the most transaction value within each service?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per layanan dan rute terpilih",
+    "analytical_grain": "One row per service and selected route",
     "expected_output": [
       "service_type",
       "route_id",
@@ -1961,25 +1961,25 @@
       "service_value_share_pct"
     ],
     "learning_objectives": [
-      "Analitik Lanjutan",
+      "Advanced Analytics",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Tepat lima rute per layanan; share denominator seluruh rute layanan, bukan hanya top 5. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Return exactly five routes per service. Use all routes within the service as the value-share denominator, not just the top five. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   },
   {
     "id": "KL-75",
     "number": 75,
-    "topic": "Analitik Lanjutan",
-    "title": "Target SLA 90 persen",
+    "topic": "Advanced Analytics",
+    "title": "Reaching a 90% on-time target",
     "difficulty": "Advanced",
-    "business_question": "Berapa shipment yang dibutuhkan untuk mencapai target on-time 90% jika shipment tambahan seluruhnya on-time?",
+    "business_question": "How many additional shipments are needed to reach a 90% on-time rate if every additional shipment is on time?",
     "required_tables": [
       "shipments"
     ],
-    "analytical_grain": "Satu baris per layanan",
+    "analytical_grain": "One row per service",
     "expected_output": [
       "service_type",
       "eligible_delivered",
@@ -1988,12 +1988,12 @@
       "additional_on_time_needed"
     ],
     "learning_objectives": [
-      "Analitik Lanjutan",
+      "Advanced Analytics",
       "PostgreSQL",
-      "Grain dan denominator yang konsisten"
+      "Consistent analytical grain and denominators"
     ],
-    "limitations": "Selesaikan (on_time+x)/(eligible+x)>=0,90; x bilangan bulat nonnegatif. Semua tambahan diasumsikan eligible dan on-time. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
-    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "limitations": "Solve (on_time + x) / (eligible + x) >= 0.90 for a nonnegative integer x. Assume every additional shipment is eligible and on time. Transaction value is not profit. Round rates, percentages, and averages to 2 decimal places unless stated otherwise. On time means status delivered with both actual_delivery and estimated_delivery present, and actual_delivery <= estimated_delivery. Actual dates before pickup are audited separately rather than silently cleaned.",
+    "validation_policy": "Column names and column order must match Expected output. Row order is ignored; duplicate rows are still counted.",
     "source_question": null
   }
 ]
