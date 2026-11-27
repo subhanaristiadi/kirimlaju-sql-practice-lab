@@ -1,0 +1,18 @@
+{
+  "customers": {
+    "rows": 600,
+    "sha256": "445c39f24e7e4195294b27817ecd20a4ce2d91093eb4b383623fa3eb1275f1a6"
+  },
+  "routes": {
+    "rows": 80,
+    "sha256": "02049801a19b8da237dd36cf5ebb943a37887a0e6bae75cf47f7d9bc1cccf68e"
+  },
+  "shipments": {
+    "rows": 4000,
+    "sha256": "754b0786da113fafe794e5cc986b2b9d87831ca3c725698ffafa1ff486c389c0"
+  },
+  "status_history": {
+    "rows": 12747,
+    "sha256": "9cfc2ae74a1a8c0e70473bcfc90ac010244457d9a445e9ffab5a824c2ad54d76"
+  }
+}

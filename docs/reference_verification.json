@@ -1,0 +1,849 @@
+[
+  {
+    "id": "KL-01",
+    "rows": 1,
+    "columns": [
+      "total_shipments",
+      "transaction_value_idr",
+      "avg_cost_idr",
+      "avg_weight_kg"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-02",
+    "rows": 3,
+    "columns": [
+      "service_type",
+      "shipments",
+      "shipment_share_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-03",
+    "rows": 3,
+    "columns": [
+      "service_type",
+      "shipments",
+      "transaction_value_idr",
+      "volume_rank",
+      "value_rank"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-04",
+    "rows": 1,
+    "columns": [
+      "total_shipments",
+      "delivered",
+      "lost",
+      "returned",
+      "delivery_rate_pct",
+      "loss_rate_pct",
+      "return_rate_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-05",
+    "rows": 37,
+    "columns": [
+      "pickup_month",
+      "shipments",
+      "transaction_value_idr",
+      "eligible_delivered",
+      "on_time",
+      "delivery_rate_pct",
+      "on_time_rate_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-06",
+    "rows": 3,
+    "columns": [
+      "service_type",
+      "shipments",
+      "transaction_value_idr",
+      "avg_cost_idr",
+      "avg_weight_kg"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-07",
+    "rows": 3,
+    "columns": [
+      "service_type",
+      "eligible_delivered",
+      "on_time",
+      "on_time_rate_pct",
+      "sla_rank"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-08",
+    "rows": 3,
+    "columns": [
+      "service_type",
+      "shipments",
+      "transaction_value_idr",
+      "avg_cost_idr",
+      "avg_weight_kg",
+      "eligible_delivered",
+      "on_time",
+      "on_time_rate_pct",
+      "delivery_rate_pct",
+      "loss_rate_pct",
+      "return_rate_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-09",
+    "rows": 3,
+    "columns": [
+      "service_type",
+      "eligible_delivered",
+      "late_deliveries",
+      "late_rate_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-10",
+    "rows": 3,
+    "columns": [
+      "service_type",
+      "shipments",
+      "delivery_rate_pct",
+      "loss_rate_pct",
+      "return_rate_pct",
+      "high_volume",
+      "below_avg_delivery"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-11",
+    "rows": 80,
+    "columns": [
+      "route_id",
+      "shipments",
+      "volume_rank"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-12",
+    "rows": 80,
+    "columns": [
+      "route_id",
+      "transaction_value_idr",
+      "value_rank"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-13",
+    "rows": 80,
+    "columns": [
+      "route_id",
+      "avg_cost_idr",
+      "highest_rank",
+      "lowest_rank"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-14",
+    "rows": 80,
+    "columns": [
+      "route_id",
+      "eligible_delivered",
+      "on_time",
+      "on_time_rate_pct",
+      "best_rank",
+      "worst_rank"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-15",
+    "rows": 1,
+    "columns": [
+      "eligible_delivered",
+      "distance_duration_corr",
+      "distance_lateness_corr"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-16",
+    "rows": 80,
+    "columns": [
+      "route_id",
+      "shipments",
+      "lost",
+      "returned",
+      "loss_rate_pct",
+      "return_rate_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-17",
+    "rows": 80,
+    "columns": [
+      "route_id",
+      "shipments",
+      "transaction_value_idr",
+      "avg_cost_idr",
+      "on_time_rate_pct",
+      "loss_rate_pct",
+      "return_rate_pct",
+      "needs_review"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-18",
+    "rows": 2,
+    "columns": [
+      "customer_type",
+      "shipments",
+      "shipment_share_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-19",
+    "rows": 2,
+    "columns": [
+      "customer_type",
+      "transaction_value_idr",
+      "value_rank"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-20",
+    "rows": 2,
+    "columns": [
+      "customer_type",
+      "shipments",
+      "avg_cost_idr"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-21",
+    "rows": 600,
+    "columns": [
+      "customer_id",
+      "name",
+      "shipments"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-22",
+    "rows": 10,
+    "columns": [
+      "customer_id",
+      "name",
+      "shipments",
+      "transaction_value_idr",
+      "volume_rank",
+      "value_rank"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-23",
+    "rows": 8,
+    "columns": [
+      "customer_type",
+      "status",
+      "shipments",
+      "outcome_share_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-24",
+    "rows": 135,
+    "columns": [
+      "customer_id",
+      "service_type",
+      "route_id",
+      "shipments"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-25",
+    "rows": 5,
+    "columns": [
+      "package_type",
+      "shipments",
+      "transaction_value_idr"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-26",
+    "rows": 5,
+    "columns": [
+      "package_type",
+      "shipments",
+      "min_weight_kg",
+      "p25_weight_kg",
+      "median_weight_kg",
+      "p75_weight_kg",
+      "max_weight_kg"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-27",
+    "rows": 5,
+    "columns": [
+      "package_type",
+      "shipments",
+      "outlier_shipments"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-28",
+    "rows": 15,
+    "columns": [
+      "package_type",
+      "service_type",
+      "shipments",
+      "service_share_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-29",
+    "rows": 3,
+    "columns": [
+      "weight_band",
+      "shipments",
+      "avg_cost_idr",
+      "eligible_delivered",
+      "late_deliveries",
+      "late_rate_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-30",
+    "rows": 3,
+    "columns": [
+      "service_type",
+      "eligible_delivered",
+      "on_time",
+      "on_time_rate_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-31",
+    "rows": 1,
+    "columns": [
+      "late_deliveries",
+      "avg_late_days",
+      "median_late_days"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-32",
+    "rows": 239,
+    "columns": [
+      "route_id",
+      "service_type",
+      "eligible_delivered",
+      "late_deliveries",
+      "late_rate_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-33",
+    "rows": 3,
+    "columns": [
+      "service_type",
+      "eligible_delivered",
+      "avg_actual_days",
+      "avg_estimated_days",
+      "avg_delta_days"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-34",
+    "rows": 1,
+    "columns": [
+      "delivered_shipments",
+      "missing_actual_delivery",
+      "missing_rate_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-35",
+    "rows": 1,
+    "columns": [
+      "delivered_missing_date",
+      "non_delivered_with_date",
+      "delivered_missing_event",
+      "non_delivered_with_event"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-36",
+    "rows": 1,
+    "columns": [
+      "shipments",
+      "avg_events_per_shipment"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-37",
+    "rows": 8,
+    "columns": [
+      "status",
+      "events",
+      "event_share_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-38",
+    "rows": 1,
+    "columns": [
+      "failed_delivery_shipments"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-39",
+    "rows": 74,
+    "columns": [
+      "location",
+      "events",
+      "shipments"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-40",
+    "rows": 1,
+    "columns": [
+      "eligible_shipments",
+      "avg_transit_hours"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-41",
+    "rows": 10,
+    "columns": [
+      "event_sequence",
+      "shipments"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-42",
+    "rows": 1,
+    "columns": [
+      "shipments_with_event_after_terminal",
+      "shipments_not_starting_with_pickup"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-43",
+    "rows": 1,
+    "columns": [
+      "total_shipments",
+      "missing_customer",
+      "missing_route"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-44",
+    "rows": 1,
+    "columns": [
+      "shipments",
+      "non_null_tracking_numbers",
+      "distinct_tracking_numbers",
+      "duplicate_excess"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-45",
+    "rows": 37,
+    "columns": [
+      "table_name",
+      "column_name",
+      "total_rows",
+      "missing_values"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-46",
+    "rows": 4,
+    "columns": [
+      "status",
+      "shipments",
+      "missing_actual_delivery"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-47",
+    "rows": 1,
+    "columns": [
+      "estimated_before_pickup",
+      "actual_before_pickup",
+      "actual_after_estimated",
+      "missing_sla_dates"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-48",
+    "rows": 1,
+    "columns": [
+      "total_shipments",
+      "with_tracking",
+      "without_tracking"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-49",
+    "rows": 7,
+    "columns": [
+      "check_name",
+      "issue_count"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-50",
+    "rows": 1,
+    "columns": [
+      "delivered_shipments",
+      "eligible_delivered",
+      "on_time",
+      "valid_on_time_rate_pct",
+      "naive_on_time_rate_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-51",
+    "rows": 3,
+    "columns": [
+      "service_type",
+      "shipments",
+      "transaction_value_idr",
+      "avg_cost_idr",
+      "avg_weight_kg",
+      "eligible_delivered",
+      "on_time",
+      "on_time_rate_pct",
+      "delivery_rate_pct",
+      "loss_rate_pct",
+      "return_rate_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-52",
+    "rows": 122,
+    "columns": [
+      "dimension",
+      "dimension_value",
+      "shipments",
+      "late_rate_pct",
+      "late_rank"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-53",
+    "rows": 80,
+    "columns": [
+      "route_id",
+      "shipments",
+      "late_deliveries",
+      "lost",
+      "returned",
+      "on_time_rate_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-54",
+    "rows": 10,
+    "columns": [
+      "route_id",
+      "service_type",
+      "eligible_delivered",
+      "late_deliveries",
+      "avg_late_days"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-55",
+    "rows": 111,
+    "columns": [
+      "pickup_month",
+      "service_type",
+      "shipments",
+      "transaction_value_idr",
+      "eligible_delivered",
+      "on_time",
+      "on_time_rate_pct",
+      "loss_rate_pct",
+      "return_rate_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-56",
+    "rows": 37,
+    "columns": [
+      "pickup_month",
+      "shipments",
+      "transaction_value_idr",
+      "previous_shipments",
+      "previous_value_idr",
+      "volume_growth_pct",
+      "value_growth_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-57",
+    "rows": 37,
+    "columns": [
+      "pickup_month",
+      "shipments",
+      "rolling_3_month_avg"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-58",
+    "rows": 37,
+    "columns": [
+      "pickup_month",
+      "transaction_value_idr",
+      "cumulative_value_idr"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-59",
+    "rows": 111,
+    "columns": [
+      "pickup_month",
+      "route_id",
+      "shipments",
+      "route_rank"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-60",
+    "rows": 7,
+    "columns": [
+      "pickup_weekday",
+      "shipments",
+      "transaction_value_idr",
+      "eligible_delivered",
+      "late_deliveries",
+      "late_rate_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-61",
+    "rows": 27,
+    "columns": [
+      "first_shipment_month",
+      "new_active_customers"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-62",
+    "rows": 27,
+    "columns": [
+      "cohort_month",
+      "cohort_customers",
+      "retained_next_month",
+      "retention_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-63",
+    "rows": 356,
+    "columns": [
+      "customer_id",
+      "last_pickup",
+      "inactive_days"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-64",
+    "rows": 10,
+    "columns": [
+      "value_decile",
+      "customers",
+      "transaction_value_idr",
+      "value_share_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-65",
+    "rows": 1,
+    "columns": [
+      "active_customers",
+      "multi_service_customers",
+      "multi_service_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-66",
+    "rows": 19,
+    "columns": [
+      "previous_status",
+      "next_status",
+      "transitions"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-67",
+    "rows": 19,
+    "columns": [
+      "previous_status",
+      "next_status",
+      "transitions",
+      "avg_gap_hours"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-68",
+    "rows": 1,
+    "columns": [
+      "failed_shipments",
+      "recovered_shipments"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-69",
+    "rows": 4,
+    "columns": [
+      "shipment_status",
+      "last_event_status",
+      "shipments",
+      "status_matches"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-70",
+    "rows": 8,
+    "columns": [
+      "status",
+      "events",
+      "missing_timestamp",
+      "missing_location"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-71",
+    "rows": 2,
+    "columns": [
+      "service_type",
+      "shipments",
+      "avg_actual_price_per_kg",
+      "avg_catalog_price_per_kg",
+      "avg_gap_per_kg"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-72",
+    "rows": 1,
+    "columns": [
+      "same_day_shipments",
+      "estimate_not_same_day",
+      "missing_dates"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-73",
+    "rows": 2,
+    "columns": [
+      "service_type",
+      "shipments",
+      "avg_estimated_days",
+      "avg_catalog_days",
+      "different_estimates"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-74",
+    "rows": 15,
+    "columns": [
+      "service_type",
+      "route_id",
+      "transaction_value_idr",
+      "route_rank",
+      "service_value_share_pct"
+    ],
+    "passed": true
+  },
+  {
+    "id": "KL-75",
+    "rows": 3,
+    "columns": [
+      "service_type",
+      "eligible_delivered",
+      "on_time",
+      "on_time_rate_pct",
+      "additional_on_time_needed"
+    ],
+    "passed": true
+  }
+]

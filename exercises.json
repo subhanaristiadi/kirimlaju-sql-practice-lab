@@ -1,1114 +1,1999 @@
 [
   {
-    "id": "FND-01",
-    "topic": "SQL Fundamentals",
-    "title": "Select outlet details",
+    "id": "KL-01",
+    "number": 1,
+    "topic": "Executive / KPI",
+    "title": "Ringkasan KPI pengiriman",
     "difficulty": "Beginner",
-    "business_question": "Return outlet ID, name, city, and status for all outlets.",
+    "business_question": "Berapa total shipment, total transaction value, average shipment cost, dan average weight?",
     "required_tables": [
-      "outlets"
+      "shipments"
     ],
-    "analytical_grain": "One row per outlet",
+    "analytical_grain": "Satu baris keseluruhan",
     "expected_output": [
-      "outlet_id",
-      "outlet_name",
-      "city",
-      "status"
+      "total_shipments",
+      "transaction_value_idr",
+      "avg_cost_idr",
+      "avg_weight_kg"
     ],
     "learning_objectives": [
-      "SQL Fundamentals",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Executive / KPI",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Hitung dari shipments tanpa join. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 1
   },
   {
-    "id": "FND-02",
-    "topic": "SQL Fundamentals",
-    "title": "Filter outlets by province",
+    "id": "KL-02",
+    "number": 2,
+    "topic": "Executive / KPI",
+    "title": "Komposisi layanan",
     "difficulty": "Beginner",
-    "business_question": "Show outlets located in a province specified by the dataset; inspect distinct province values first and filter to one exact stored value.",
+    "business_question": "Bagaimana komposisi shipment berdasarkan service type?",
     "required_tables": [
-      "outlets"
+      "shipments"
     ],
-    "analytical_grain": "One row per matching outlet",
+    "analytical_grain": "Satu baris per service_type",
     "expected_output": [
-      "outlet_id",
-      "name",
-      "province"
+      "service_type",
+      "shipments",
+      "shipment_share_pct"
     ],
     "learning_objectives": [
-      "SQL Fundamentals",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Executive / KPI",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Persentase menggunakan seluruh shipment. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 2
   },
   {
-    "id": "FND-03",
-    "topic": "SQL Fundamentals",
-    "title": "Distinct order types",
-    "difficulty": "Beginner",
-    "business_question": "List the distinct stored order types.",
-    "required_tables": [
-      "orders"
-    ],
-    "analytical_grain": "One row per distinct order type",
-    "expected_output": [
-      "order_type"
-    ],
-    "learning_objectives": [
-      "SQL Fundamentals",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "FND-04",
-    "topic": "SQL Fundamentals",
-    "title": "Find orders above the average",
+    "id": "KL-03",
+    "number": 3,
+    "topic": "Executive / KPI",
+    "title": "Peringkat volume dan nilai layanan",
     "difficulty": "Intermediate",
-    "business_question": "Return orders whose total_amount is greater than the overall average order amount.",
+    "business_question": "Service mana yang memiliki volume terbesar dan transaction value terbesar?",
     "required_tables": [
-      "orders"
+      "shipments"
     ],
-    "analytical_grain": "One row per order",
+    "analytical_grain": "Satu baris per layanan",
     "expected_output": [
-      "order_id",
-      "order_date",
-      "total_amount"
+      "service_type",
+      "shipments",
+      "transaction_value_idr",
+      "volume_rank",
+      "value_rank"
     ],
     "learning_objectives": [
-      "SQL Fundamentals",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Executive / KPI",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Tampilkan seluruh layanan dengan dua peringkat; ranking ties menggunakan DENSE_RANK. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 3
   },
   {
-    "id": "FND-05",
-    "topic": "SQL Fundamentals",
-    "title": "Check NULL order amounts",
+    "id": "KL-04",
+    "number": 4,
+    "topic": "Executive / KPI",
+    "title": "Delivery, loss, dan return rate",
     "difficulty": "Beginner",
-    "business_question": "Count NULL and non-NULL values in orders.total_amount.",
+    "business_question": "Bagaimana delivery, loss, dan return rate secara keseluruhan?",
     "required_tables": [
-      "orders"
+      "shipments"
     ],
-    "analytical_grain": "One summary row",
+    "analytical_grain": "Satu baris keseluruhan",
     "expected_output": [
-      "null_amounts",
-      "populated_amounts"
+      "total_shipments",
+      "delivered",
+      "lost",
+      "returned",
+      "delivery_rate_pct",
+      "loss_rate_pct",
+      "return_rate_pct"
     ],
     "learning_objectives": [
-      "SQL Fundamentals",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Executive / KPI",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Denominator semua shipment. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 4
   },
   {
-    "id": "REV-01",
-    "topic": "Outlet Revenue Ranking",
-    "title": "Revenue by eligible outlet",
-    "difficulty": "Beginner",
-    "business_question": "Calculate recorded order revenue per outlet using orders.total_amount. Exclude status exactly equal to temporarily_closed; include eligible outlets with zero orders.",
+    "id": "KL-05",
+    "number": 5,
+    "topic": "Executive / KPI",
+    "title": "Tren KPI bulanan",
+    "difficulty": "Intermediate",
+    "business_question": "Bagaimana KPI berubah dari bulan ke bulan?",
     "required_tables": [
-      "orders",
-      "outlets"
+      "shipments"
     ],
-    "analytical_grain": "One row per eligible outlet",
+    "analytical_grain": "Satu baris per bulan pickup",
     "expected_output": [
-      "outlet_id",
-      "outlet_name",
-      "city",
+      "pickup_month",
+      "shipments",
+      "transaction_value_idr",
+      "eligible_delivered",
+      "on_time",
+      "delivery_rate_pct",
+      "on_time_rate_pct"
+    ],
+    "learning_objectives": [
+      "Executive / KPI",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Tampilkan bulan yang memiliki shipment; bulan berbentuk tanggal hari pertama. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 5
+  },
+  {
+    "id": "KL-06",
+    "number": 6,
+    "topic": "Service Performance",
+    "title": "Profil volume dan nilai layanan",
+    "difficulty": "Beginner",
+    "business_question": "Bagaimana volume, transaction value, average cost, dan average weight untuk regular, express, dan same-day?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per layanan",
+    "expected_output": [
+      "service_type",
+      "shipments",
+      "transaction_value_idr",
+      "avg_cost_idr",
+      "avg_weight_kg"
+    ],
+    "learning_objectives": [
+      "Service Performance",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Gunakan nilai service_type persis dari data. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 6
+  },
+  {
+    "id": "KL-07",
+    "number": 7,
+    "topic": "Service Performance",
+    "title": "Layanan dengan SLA terbaik",
+    "difficulty": "Intermediate",
+    "business_question": "Service mana yang memiliki on-time rate terbaik?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per layanan",
+    "expected_output": [
+      "service_type",
+      "eligible_delivered",
+      "on_time",
+      "on_time_rate_pct",
+      "sla_rank"
+    ],
+    "learning_objectives": [
+      "Service Performance",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Tampilkan semua layanan, ranking berdasarkan rate yang telah dibulatkan. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 7
+  },
+  {
+    "id": "KL-08",
+    "number": 8,
+    "topic": "Service Performance",
+    "title": "Nilai transaksi dan performa delivery",
+    "difficulty": "Intermediate",
+    "business_question": "Apakah service dengan transaction value lebih tinggi juga memberikan delivery performance lebih baik?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per layanan",
+    "expected_output": [
+      "service_type",
+      "shipments",
+      "transaction_value_idr",
+      "avg_cost_idr",
+      "avg_weight_kg",
+      "eligible_delivered",
+      "on_time",
+      "on_time_rate_pct",
+      "delivery_rate_pct",
+      "loss_rate_pct",
+      "return_rate_pct"
+    ],
+    "learning_objectives": [
+      "Service Performance",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Bandingkan nilai dan performa melalui scorecard; korelasi sebab-akibat tidak disimpulkan. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 8
+  },
+  {
+    "id": "KL-09",
+    "number": 9,
+    "topic": "Service Performance",
+    "title": "Tingkat keterlambatan layanan",
+    "difficulty": "Intermediate",
+    "business_question": "Bagaimana tingkat keterlambatan menurut service?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per layanan",
+    "expected_output": [
+      "service_type",
+      "eligible_delivered",
+      "late_deliveries",
+      "late_rate_pct"
+    ],
+    "learning_objectives": [
+      "Service Performance",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Late rate hanya dari eligible delivered. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 9
+  },
+  {
+    "id": "KL-10",
+    "number": 10,
+    "topic": "Service Performance",
+    "title": "Volume tinggi dan outcome buruk",
+    "difficulty": "Intermediate",
+    "business_question": "Apakah ada service yang memiliki volume tinggi tetapi outcome delivery relatif buruk?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per layanan",
+    "expected_output": [
+      "service_type",
+      "shipments",
+      "delivery_rate_pct",
+      "loss_rate_pct",
+      "return_rate_pct",
+      "high_volume",
+      "below_avg_delivery"
+    ],
+    "learning_objectives": [
+      "Service Performance",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "High volume >= rata-rata volume antar layanan; below average memakai rata-rata tak berbobot dari delivery rate layanan. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 10
+  },
+  {
+    "id": "KL-11",
+    "number": 11,
+    "topic": "Route Performance",
+    "title": "Peringkat volume rute",
+    "difficulty": "Beginner",
+    "business_question": "Rute mana yang memiliki shipment volume tertinggi?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per rute aktif",
+    "expected_output": [
+      "route_id",
+      "shipments",
+      "volume_rank"
+    ],
+    "learning_objectives": [
+      "Route Performance",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Tampilkan seluruh rute aktif. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 11
+  },
+  {
+    "id": "KL-12",
+    "number": 12,
+    "topic": "Route Performance",
+    "title": "Peringkat nilai transaksi rute",
+    "difficulty": "Intermediate",
+    "business_question": "Rute mana yang menghasilkan transaction value terbesar?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per rute aktif",
+    "expected_output": [
+      "route_id",
+      "transaction_value_idr",
+      "value_rank"
+    ],
+    "learning_objectives": [
+      "Route Performance",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Tampilkan seluruh rute aktif. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 12
+  },
+  {
+    "id": "KL-13",
+    "number": 13,
+    "topic": "Route Performance",
+    "title": "Biaya rata-rata tertinggi dan terendah",
+    "difficulty": "Intermediate",
+    "business_question": "Rute mana yang memiliki average shipment cost tertinggi/terendah?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per rute aktif",
+    "expected_output": [
+      "route_id",
+      "avg_cost_idr",
+      "highest_rank",
+      "lowest_rank"
+    ],
+    "learning_objectives": [
+      "Route Performance",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Kedua ranking menggunakan rata-rata yang telah dibulatkan. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 13
+  },
+  {
+    "id": "KL-14",
+    "number": 14,
+    "topic": "Route Performance",
+    "title": "Ranking SLA rute",
+    "difficulty": "Intermediate",
+    "business_question": "Rute mana yang memiliki on-time rate terbaik dan terburuk?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per rute aktif",
+    "expected_output": [
+      "route_id",
+      "eligible_delivered",
+      "on_time",
+      "on_time_rate_pct",
+      "best_rank",
+      "worst_rank"
+    ],
+    "learning_objectives": [
+      "Route Performance",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Tampilkan semua rute aktif; ranking berdasarkan rate yang dibulatkan. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 14
+  },
+  {
+    "id": "KL-15",
+    "number": 15,
+    "topic": "Route Performance",
+    "title": "Korelasi jarak dan durasi",
+    "difficulty": "Advanced",
+    "business_question": "Apakah jarak rute berkorelasi dengan delivery duration atau keterlambatan?",
+    "required_tables": [
+      "routes",
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris keseluruhan",
+    "expected_output": [
+      "eligible_delivered",
+      "distance_duration_corr",
+      "distance_lateness_corr"
+    ],
+    "learning_objectives": [
+      "Route Performance",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Pearson CORR; pembulatan koefisien 4 desimal. Lateness bertanda negatif berarti lebih awal. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 15
+  },
+  {
+    "id": "KL-16",
+    "number": 16,
+    "topic": "Route Performance",
+    "title": "Risiko lost dan returned per rute",
+    "difficulty": "Intermediate",
+    "business_question": "Rute mana yang memiliki loss/return rate yang perlu diperhatikan?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per rute aktif",
+    "expected_output": [
+      "route_id",
+      "shipments",
+      "lost",
+      "returned",
+      "loss_rate_pct",
+      "return_rate_pct"
+    ],
+    "learning_objectives": [
+      "Route Performance",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Tampilkan semua rute agar numerator dan denominator dapat ditinjau. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 16
+  },
+  {
+    "id": "KL-17",
+    "number": 17,
+    "topic": "Route Performance",
+    "title": "Prioritas investigasi rute",
+    "difficulty": "Intermediate",
+    "business_question": "Rute mana yang menjadi kandidat evaluasi harga atau operational improvement?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per rute aktif",
+    "expected_output": [
+      "route_id",
+      "shipments",
+      "transaction_value_idr",
+      "avg_cost_idr",
+      "on_time_rate_pct",
+      "loss_rate_pct",
+      "return_rate_pct",
+      "needs_review"
+    ],
+    "learning_objectives": [
+      "Route Performance",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Flag evaluasi jika SLA <80%, loss >=5%, atau return >=10%. Ini prioritas investigasi, bukan bukti profit/rugi. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 17
+  },
+  {
+    "id": "KL-18",
+    "number": 18,
+    "topic": "Customer",
+    "title": "Business versus individual",
+    "difficulty": "Beginner",
+    "business_question": "Berapa proporsi shipment business vs individual?",
+    "required_tables": [
+      "customers",
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per customer_type",
+    "expected_output": [
+      "customer_type",
+      "shipments",
+      "shipment_share_pct"
+    ],
+    "learning_objectives": [
+      "Customer",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Proporsi shipment, bukan proporsi jumlah customer. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 18
+  },
+  {
+    "id": "KL-19",
+    "number": 19,
+    "topic": "Customer",
+    "title": "Nilai transaksi per segmen",
+    "difficulty": "Intermediate",
+    "business_question": "Segmen mana yang menghasilkan total transaction value terbesar?",
+    "required_tables": [
+      "customers",
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per customer_type",
+    "expected_output": [
+      "customer_type",
+      "transaction_value_idr",
+      "value_rank"
+    ],
+    "learning_objectives": [
+      "Customer",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Tampilkan semua segmen. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 19
+  },
+  {
+    "id": "KL-20",
+    "number": 20,
+    "topic": "Customer",
+    "title": "Biaya shipment per segmen",
+    "difficulty": "Beginner",
+    "business_question": "Bagaimana average shipment cost per customer type?",
+    "required_tables": [
+      "customers",
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per customer_type",
+    "expected_output": [
+      "customer_type",
+      "shipments",
+      "avg_cost_idr"
+    ],
+    "learning_objectives": [
+      "Customer",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Rata-rata pada grain shipment. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 20
+  },
+  {
+    "id": "KL-21",
+    "number": 21,
+    "topic": "Customer",
+    "title": "Frekuensi shipment pelanggan",
+    "difficulty": "Beginner",
+    "business_question": "Bagaimana shipment frequency per customer?",
+    "required_tables": [
+      "customers",
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per customer",
+    "expected_output": [
+      "customer_id",
+      "name",
+      "shipments"
+    ],
+    "learning_objectives": [
+      "Customer",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Sertakan pelanggan tanpa shipment. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 21
+  },
+  {
+    "id": "KL-22",
+    "number": 22,
+    "topic": "Customer",
+    "title": "Sepuluh pelanggan terbesar",
+    "difficulty": "Intermediate",
+    "business_question": "Siapa pelanggan dengan volume dan transaction value terbesar?",
+    "required_tables": [
+      "customers",
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per top-10 customer",
+    "expected_output": [
+      "customer_id",
+      "name",
+      "shipments",
+      "transaction_value_idr",
+      "volume_rank",
+      "value_rank"
+    ],
+    "learning_objectives": [
+      "Customer",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Ambil tepat 10 pelanggan berdasarkan nilai transaksi DESC, customer_id ASC sebagai tie-breaker; ranking dihitung terhadap semua customer. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 22
+  },
+  {
+    "id": "KL-23",
+    "number": 23,
+    "topic": "Customer",
+    "title": "Outcome delivery per segmen",
+    "difficulty": "Intermediate",
+    "business_question": "Apakah customer type tertentu memiliki delivery outcome yang berbeda?",
+    "required_tables": [
+      "customers",
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per customer_type dan status",
+    "expected_output": [
+      "customer_type",
       "status",
-      "revenue"
+      "shipments",
+      "outcome_share_pct"
     ],
     "learning_objectives": [
-      "Outlet Revenue Ranking",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Customer",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Denominator shipment dalam segmen. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 23
   },
   {
-    "id": "REV-02",
-    "topic": "Outlet Revenue Ranking",
-    "title": "Top five outlets by revenue",
-    "difficulty": "Beginner",
-    "business_question": "Return the five highest-revenue outlets among outlets not marked temporarily_closed.",
-    "required_tables": [
-      "orders",
-      "outlets"
-    ],
-    "analytical_grain": "Up to five rows; one per outlet",
-    "expected_output": [
-      "outlet_id",
-      "outlet_name",
-      "city",
-      "revenue"
-    ],
-    "learning_objectives": [
-      "Outlet Revenue Ranking",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "REV-03",
-    "topic": "Outlet Revenue Ranking",
-    "title": "Lowest-revenue eligible outlets",
-    "difficulty": "Beginner",
-    "business_question": "Rank eligible outlets from lowest to highest revenue. Preserve eligible zero-order outlets.",
-    "required_tables": [
-      "orders",
-      "outlets"
-    ],
-    "analytical_grain": "One row per eligible outlet",
-    "expected_output": [
-      "outlet_id",
-      "outlet_name",
-      "city",
-      "revenue"
-    ],
-    "learning_objectives": [
-      "Outlet Revenue Ranking",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "REV-04",
-    "topic": "Outlet Revenue Ranking",
-    "title": "Revenue rank with window function",
+    "id": "KL-24",
+    "number": 24,
+    "topic": "Customer",
+    "title": "Pola pelanggan volume tinggi",
     "difficulty": "Intermediate",
-    "business_question": "Rank eligible outlets by revenue using a window function. Include zero-order outlets.",
+    "business_question": "Apakah pelanggan dengan volume tinggi menunjukkan pola service/route tertentu?",
     "required_tables": [
-      "orders",
-      "outlets"
+      "shipments"
     ],
-    "analytical_grain": "One row per eligible outlet",
+    "analytical_grain": "Satu baris per top customer, service, route",
     "expected_output": [
-      "outlet_id",
-      "outlet_name",
-      "city",
-      "revenue",
-      "revenue_rank"
+      "customer_id",
+      "service_type",
+      "route_id",
+      "shipments"
     ],
     "learning_objectives": [
-      "Outlet Revenue Ranking",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Customer",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Pilih tepat 10 pelanggan berdasarkan jumlah shipment DESC, customer_id ASC. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 24
   },
   {
-    "id": "REV-05",
-    "topic": "Outlet Revenue Ranking",
-    "title": "Compare eligible and temporarily closed outlets",
-    "difficulty": "Intermediate",
-    "business_question": "Summarize outlet counts by stored status, without assuming all non-closed statuses mean operating.",
+    "id": "KL-25",
+    "number": 25,
+    "topic": "Package & Weight",
+    "title": "Volume dan nilai jenis paket",
+    "difficulty": "Beginner",
+    "business_question": "Bagaimana volume dan transaction value berdasarkan package type?",
     "required_tables": [
-      "outlets"
+      "shipments"
     ],
-    "analytical_grain": "One row per stored status",
+    "analytical_grain": "Satu baris per package_type",
+    "expected_output": [
+      "package_type",
+      "shipments",
+      "transaction_value_idr"
+    ],
+    "learning_objectives": [
+      "Package & Weight",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Gunakan seluruh shipment. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 25
+  },
+  {
+    "id": "KL-26",
+    "number": 26,
+    "topic": "Package & Weight",
+    "title": "Distribusi berat paket",
+    "difficulty": "Advanced",
+    "business_question": "Bagaimana distribusi weight_kg per package type?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per package_type",
+    "expected_output": [
+      "package_type",
+      "shipments",
+      "min_weight_kg",
+      "p25_weight_kg",
+      "median_weight_kg",
+      "p75_weight_kg",
+      "max_weight_kg"
+    ],
+    "learning_objectives": [
+      "Package & Weight",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Kuartil memakai PERCENTILE_CONT. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 26
+  },
+  {
+    "id": "KL-27",
+    "number": 27,
+    "topic": "Package & Weight",
+    "title": "Outlier berat dengan IQR",
+    "difficulty": "Advanced",
+    "business_question": "Apakah terdapat berat yang tidak lazim untuk suatu package category?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per package_type",
+    "expected_output": [
+      "package_type",
+      "shipments",
+      "outlier_shipments"
+    ],
+    "learning_objectives": [
+      "Package & Weight",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Outlier di luar pagar Tukey 1,5 IQR dalam setiap kategori; tampilkan kategori dengan nol outlier. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 27
+  },
+  {
+    "id": "KL-28",
+    "number": 28,
+    "topic": "Package & Weight",
+    "title": "Preferensi layanan menurut paket",
+    "difficulty": "Intermediate",
+    "business_question": "Apakah package type tertentu lebih sering menggunakan express atau same-day?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per package_type dan service_type",
+    "expected_output": [
+      "package_type",
+      "service_type",
+      "shipments",
+      "service_share_pct"
+    ],
+    "learning_objectives": [
+      "Package & Weight",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Tampilkan seluruh kombinasi yang teramati. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 28
+  },
+  {
+    "id": "KL-29",
+    "number": 29,
+    "topic": "Package & Weight",
+    "title": "Berat, nilai, dan keterlambatan",
+    "difficulty": "Intermediate",
+    "business_question": "Apakah shipment yang lebih berat cenderung memiliki transaction value atau keterlambatan lebih tinggi?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per kelompok berat",
+    "expected_output": [
+      "weight_band",
+      "shipments",
+      "avg_cost_idr",
+      "eligible_delivered",
+      "late_deliveries",
+      "late_rate_pct"
+    ],
+    "learning_objectives": [
+      "Package & Weight",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Kelompok: <1, 1 sampai 5 inklusif, >5 kg. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 29
+  },
+  {
+    "id": "KL-30",
+    "number": 30,
+    "topic": "SLA & Delivery",
+    "title": "SLA on-time per layanan",
+    "difficulty": "Intermediate",
+    "business_question": "Berapa on-time rate berdasarkan service type?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per layanan",
+    "expected_output": [
+      "service_type",
+      "eligible_delivered",
+      "on_time",
+      "on_time_rate_pct"
+    ],
+    "learning_objectives": [
+      "SLA & Delivery",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Tampilkan eligible denominator dan on-time numerator. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 30
+  },
+  {
+    "id": "KL-31",
+    "number": 31,
+    "topic": "SLA & Delivery",
+    "title": "Rata-rata dan median keterlambatan",
+    "difficulty": "Intermediate",
+    "business_question": "Berapa rata-rata dan median keterlambatan shipment yang terlambat?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris keseluruhan",
+    "expected_output": [
+      "late_deliveries",
+      "avg_late_days",
+      "median_late_days"
+    ],
+    "learning_objectives": [
+      "SLA & Delivery",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Hanya eligible delivered yang terlambat. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 31
+  },
+  {
+    "id": "KL-32",
+    "number": 32,
+    "topic": "SLA & Delivery",
+    "title": "Keterlambatan route-service",
+    "difficulty": "Intermediate",
+    "business_question": "Rute/service mana yang paling sering terlambat?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per route dan service aktif",
+    "expected_output": [
+      "route_id",
+      "service_type",
+      "eligible_delivered",
+      "late_deliveries",
+      "late_rate_pct"
+    ],
+    "learning_objectives": [
+      "SLA & Delivery",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Tampilkan semua kombinasi aktif, termasuk nol late. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 32
+  },
+  {
+    "id": "KL-33",
+    "number": 33,
+    "topic": "SLA & Delivery",
+    "title": "Durasi aktual versus estimasi",
+    "difficulty": "Intermediate",
+    "business_question": "Apakah delivery duration aktual berbeda signifikan dari estimated delivery?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per layanan",
+    "expected_output": [
+      "service_type",
+      "eligible_delivered",
+      "avg_actual_days",
+      "avg_estimated_days",
+      "avg_delta_days"
+    ],
+    "learning_objectives": [
+      "SLA & Delivery",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Perbandingan deskriptif berpasangan pada eligible delivered; bukan uji signifikansi statistik. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 33
+  },
+  {
+    "id": "KL-34",
+    "number": 34,
+    "topic": "SLA & Delivery",
+    "title": "Delivered tanpa tanggal aktual",
+    "difficulty": "Beginner",
+    "business_question": "Berapa proporsi delivered shipment yang tidak memiliki actual_delivery?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris keseluruhan",
+    "expected_output": [
+      "delivered_shipments",
+      "missing_actual_delivery",
+      "missing_rate_pct"
+    ],
+    "learning_objectives": [
+      "SLA & Delivery",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Denominator hanya status delivered. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 34
+  },
+  {
+    "id": "KL-35",
+    "number": 35,
+    "topic": "SLA & Delivery",
+    "title": "Konflik status dan tracking",
+    "difficulty": "Intermediate",
+    "business_question": "Apakah ada konflik antara status shipment, actual_delivery, dan status history?",
+    "required_tables": [
+      "shipments",
+      "status_history"
+    ],
+    "analytical_grain": "Satu baris ringkasan audit",
+    "expected_output": [
+      "delivered_missing_date",
+      "non_delivered_with_date",
+      "delivered_missing_event",
+      "non_delivered_with_event"
+    ],
+    "learning_objectives": [
+      "SLA & Delivery",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Konflik event berdasarkan keberadaan event delivered, bukan hanya event terakhir. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 35
+  },
+  {
+    "id": "KL-36",
+    "number": 36,
+    "topic": "Tracking & Operations",
+    "title": "Jumlah event rata-rata",
+    "difficulty": "Intermediate",
+    "business_question": "Berapa rata-rata jumlah status event per shipment?",
+    "required_tables": [
+      "shipments",
+      "status_history"
+    ],
+    "analytical_grain": "Satu baris keseluruhan",
+    "expected_output": [
+      "shipments",
+      "avg_events_per_shipment"
+    ],
+    "learning_objectives": [
+      "Tracking & Operations",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Sertakan shipment tanpa histori sebagai nol event. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 36
+  },
+  {
+    "id": "KL-37",
+    "number": 37,
+    "topic": "Tracking & Operations",
+    "title": "Frekuensi status event",
+    "difficulty": "Beginner",
+    "business_question": "Status/event apa yang paling sering muncul?",
+    "required_tables": [
+      "status_history"
+    ],
+    "analytical_grain": "Satu baris per status event",
     "expected_output": [
       "status",
-      "outlet_count"
+      "events",
+      "event_share_pct"
     ],
     "learning_objectives": [
-      "Outlet Revenue Ranking",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Tracking & Operations",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Grain event; denominator semua event. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 37
   },
   {
-    "id": "MENU-01",
-    "topic": "Menu Best Sellers",
-    "title": "Total quantity sold by menu item",
+    "id": "KL-38",
+    "number": 38,
+    "topic": "Tracking & Operations",
+    "title": "Shipment dengan failed delivery",
     "difficulty": "Beginner",
-    "business_question": "Calculate total sold quantity per menu item using order_details.quantity.",
+    "business_question": "Berapa banyak shipment yang mengalami failed delivery?",
     "required_tables": [
-      "order_details",
-      "menu_items"
+      "status_history"
     ],
-    "analytical_grain": "One row per menu item with sales",
+    "analytical_grain": "Satu baris keseluruhan",
     "expected_output": [
-      "item_id",
-      "item_name",
-      "category",
-      "quantity_sold"
+      "failed_delivery_shipments"
     ],
     "learning_objectives": [
-      "Menu Best Sellers",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Tracking & Operations",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Hitung shipment unik, bukan jumlah event. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 38
   },
   {
-    "id": "MENU-02",
-    "topic": "Menu Best Sellers",
-    "title": "Top-selling item in each category",
-    "difficulty": "Intermediate",
-    "business_question": "Find the top-selling item or tied items within each category by quantity sold.",
-    "required_tables": [
-      "order_details",
-      "menu_items"
-    ],
-    "analytical_grain": "One row per top item per category",
-    "expected_output": [
-      "category",
-      "item_name",
-      "quantity_sold"
-    ],
-    "learning_objectives": [
-      "Menu Best Sellers",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "MENU-03",
-    "topic": "Menu Best Sellers",
-    "title": "Menu items with no recorded sales",
+    "id": "KL-39",
+    "number": 39,
+    "topic": "Tracking & Operations",
+    "title": "Frekuensi lokasi tracking",
     "difficulty": "Beginner",
-    "business_question": "List menu items that have no matching order-detail rows.",
+    "business_question": "Lokasi/hub mana yang paling sering muncul pada tracking event?",
     "required_tables": [
-      "menu_items",
-      "order_details"
+      "shipments",
+      "status_history"
     ],
-    "analytical_grain": "One row per unsold menu item",
+    "analytical_grain": "Satu baris per lokasi",
     "expected_output": [
-      "item_id",
-      "name",
-      "category"
+      "location",
+      "events",
+      "shipments"
     ],
     "learning_objectives": [
-      "Menu Best Sellers",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Tracking & Operations",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Tampilkan seluruh lokasi termasuk NULL jika ada. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 39
   },
   {
-    "id": "MENU-04",
-    "topic": "Menu Best Sellers",
-    "title": "Sales by menu category",
+    "id": "KL-40",
+    "number": 40,
+    "topic": "Tracking & Operations",
+    "title": "Transit pickup ke delivered",
+    "difficulty": "Intermediate",
+    "business_question": "Berapa lama rata-rata waktu dari pickup_confirmed ke delivered?",
+    "required_tables": [
+      "status_history"
+    ],
+    "analytical_grain": "Satu baris keseluruhan",
+    "expected_output": [
+      "eligible_shipments",
+      "avg_transit_hours"
+    ],
+    "learning_objectives": [
+      "Tracking & Operations",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Pakai event pertama pickup dan delivered, hanya pasangan lengkap dengan durasi nonnegatif. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 40
+  },
+  {
+    "id": "KL-41",
+    "number": 41,
+    "topic": "Tracking & Operations",
+    "title": "Pola event shipment bermasalah",
+    "difficulty": "Advanced",
+    "business_question": "Untuk shipment bermasalah, event sequence apa yang paling umum?",
+    "required_tables": [
+      "shipments",
+      "status_history"
+    ],
+    "analytical_grain": "Satu baris per urutan event",
+    "expected_output": [
+      "event_sequence",
+      "shipments"
+    ],
+    "learning_objectives": [
+      "Tracking & Operations",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Bermasalah = status shipment lost atau returned. Urut timestamp lalu record_id. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 41
+  },
+  {
+    "id": "KL-42",
+    "number": 42,
+    "topic": "Tracking & Operations",
+    "title": "Audit urutan event",
+    "difficulty": "Advanced",
+    "business_question": "Apakah ada shipment dengan urutan status yang tidak wajar?",
+    "required_tables": [
+      "status_history"
+    ],
+    "analytical_grain": "Satu baris ringkasan audit",
+    "expected_output": [
+      "shipments_with_event_after_terminal",
+      "shipments_not_starting_with_pickup"
+    ],
+    "learning_objectives": [
+      "Tracking & Operations",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Terminal = delivered, lost, returned_to_sender; event apapun sesudah terminal ditandai. Tie-break record_id. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 42
+  },
+  {
+    "id": "KL-43",
+    "number": 43,
+    "topic": "Data Quality Audit",
+    "title": "Validasi customer dan route",
     "difficulty": "Beginner",
-    "business_question": "Aggregate quantity sold and number of detail lines by category.",
+    "business_question": "Apakah semua shipment memiliki customer dan route yang valid?",
     "required_tables": [
-      "menu_items",
-      "order_details"
+      "customers",
+      "routes",
+      "shipments"
     ],
-    "analytical_grain": "One row per category",
+    "analytical_grain": "Satu baris ringkasan audit",
     "expected_output": [
-      "category",
-      "quantity_sold",
-      "detail_lines"
+      "total_shipments",
+      "missing_customer",
+      "missing_route"
     ],
     "learning_objectives": [
-      "Menu Best Sellers",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Data Quality Audit",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "LEFT JOIN mempertahankan shipment orphan. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 43
   },
   {
-    "id": "MENU-05",
-    "topic": "Menu Best Sellers",
-    "title": "Compare available and unavailable item counts",
+    "id": "KL-44",
+    "number": 44,
+    "topic": "Data Quality Audit",
+    "title": "Keunikan tracking number",
     "difficulty": "Beginner",
-    "business_question": "Count menu items by is_available value; do not assume current availability reflects historical availability.",
+    "business_question": "Apakah tracking_number unik?",
     "required_tables": [
-      "menu_items"
+      "shipments"
     ],
-    "analytical_grain": "One row per availability value",
+    "analytical_grain": "Satu baris keseluruhan",
     "expected_output": [
-      "is_available",
-      "item_count"
+      "shipments",
+      "non_null_tracking_numbers",
+      "distinct_tracking_numbers",
+      "duplicate_excess"
     ],
     "learning_objectives": [
-      "Menu Best Sellers",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Data Quality Audit",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Duplicate excess = non-null count minus distinct non-null count. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 44
   },
   {
-    "id": "PEAK-01",
-    "topic": "Peak Hour",
-    "title": "Order volume by hour",
+    "id": "KL-45",
+    "number": 45,
+    "topic": "Data Quality Audit",
+    "title": "Missing value setiap kolom",
+    "difficulty": "Advanced",
+    "business_question": "Berapa banyak missing value pada setiap tabel?",
+    "required_tables": [
+      "customers",
+      "routes",
+      "shipments",
+      "status_history"
+    ],
+    "analytical_grain": "Satu baris per tabel dan kolom",
+    "expected_output": [
+      "table_name",
+      "column_name",
+      "total_rows",
+      "missing_values"
+    ],
+    "learning_objectives": [
+      "Data Quality Audit",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Missing = SQL NULL atau string kosong; tampilkan juga kolom tanpa missing. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 45
+  },
+  {
+    "id": "KL-46",
+    "number": 46,
+    "topic": "Data Quality Audit",
+    "title": "Audit tanggal aktual delivered",
     "difficulty": "Beginner",
-    "business_question": "Count orders by hour using orders.order_time.",
+    "business_question": "Apakah shipment berstatus delivered selalu memiliki actual_delivery?",
     "required_tables": [
-      "orders"
+      "shipments"
     ],
-    "analytical_grain": "One row per hour present",
+    "analytical_grain": "Satu baris per status",
     "expected_output": [
-      "order_hour",
-      "order_count"
+      "status",
+      "shipments",
+      "missing_actual_delivery"
     ],
     "learning_objectives": [
-      "Peak Hour",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Data Quality Audit",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Tampilkan semua status untuk membandingkan missing yang wajar dan anomali. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 46
   },
   {
-    "id": "PEAK-02",
-    "topic": "Peak Hour",
-    "title": "Top three busiest hours",
+    "id": "KL-47",
+    "number": 47,
+    "topic": "Data Quality Audit",
+    "title": "Audit kewajaran tanggal",
+    "difficulty": "Intermediate",
+    "business_question": "Apakah actual_delivery masuk akal dibanding pickup_date dan estimated_delivery?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris ringkasan audit",
+    "expected_output": [
+      "estimated_before_pickup",
+      "actual_before_pickup",
+      "actual_after_estimated",
+      "missing_sla_dates"
+    ],
+    "learning_objectives": [
+      "Data Quality Audit",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Actual sesudah estimasi adalah terlambat, bukan otomatis data tidak valid. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 47
+  },
+  {
+    "id": "KL-48",
+    "number": 48,
+    "topic": "Data Quality Audit",
+    "title": "Cakupan histori tracking",
+    "difficulty": "Intermediate",
+    "business_question": "Apakah ada shipment tanpa histori tracking?",
+    "required_tables": [
+      "shipments",
+      "status_history"
+    ],
+    "analytical_grain": "Satu baris keseluruhan",
+    "expected_output": [
+      "total_shipments",
+      "with_tracking",
+      "without_tracking"
+    ],
+    "learning_objectives": [
+      "Data Quality Audit",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Satu shipment dihitung sekali walaupun memiliki banyak event. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 48
+  },
+  {
+    "id": "KL-49",
+    "number": 49,
+    "topic": "Data Quality Audit",
+    "title": "Audit duplikat dan foreign key",
+    "difficulty": "Intermediate",
+    "business_question": "Apakah ada duplicate record atau foreign key yang tidak match?",
+    "required_tables": [
+      "customers",
+      "routes",
+      "shipments",
+      "status_history"
+    ],
+    "analytical_grain": "Satu baris per pemeriksaan",
+    "expected_output": [
+      "check_name",
+      "issue_count"
+    ],
+    "learning_objectives": [
+      "Data Quality Audit",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Tujuh pemeriksaan; duplicate = kelebihan baris kunci, bukan duplikat isi non-key. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 49
+  },
+  {
+    "id": "KL-50",
+    "number": 50,
+    "topic": "Data Quality Audit",
+    "title": "Dampak missing tanggal pada SLA",
+    "difficulty": "Intermediate",
+    "business_question": "Apa dampak data-quality issue terhadap KPI delivery dan SLA?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris keseluruhan",
+    "expected_output": [
+      "delivered_shipments",
+      "eligible_delivered",
+      "on_time",
+      "valid_on_time_rate_pct",
+      "naive_on_time_rate_pct"
+    ],
+    "learning_objectives": [
+      "Data Quality Audit",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Bandingkan denominator valid dan naive seluruh delivered. Angka naive hanya untuk audit bias. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 50
+  },
+  {
+    "id": "KL-51",
+    "number": 51,
+    "topic": "Dashboard / Management",
+    "title": "Scorecard operations manager",
+    "difficulty": "Intermediate",
+    "business_question": "KPI apa yang paling relevan untuk dashboard operations manager?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per layanan",
+    "expected_output": [
+      "service_type",
+      "shipments",
+      "transaction_value_idr",
+      "avg_cost_idr",
+      "avg_weight_kg",
+      "eligible_delivered",
+      "on_time",
+      "on_time_rate_pct",
+      "delivery_rate_pct",
+      "loss_rate_pct",
+      "return_rate_pct"
+    ],
+    "learning_objectives": [
+      "Dashboard / Management",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Outputkan metrik layanan lengkap: volume, value, biaya, berat, SLA, delivery/loss/return. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 51
+  },
+  {
+    "id": "KL-52",
+    "number": 52,
+    "topic": "Dashboard / Management",
+    "title": "Outlier multidimensi",
+    "difficulty": "Advanced",
+    "business_question": "Service, route, customer segment, dan periode mana yang menjadi outlier?",
+    "required_tables": [
+      "customers",
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per kategori dimensi",
+    "expected_output": [
+      "dimension",
+      "dimension_value",
+      "shipments",
+      "late_rate_pct",
+      "late_rank"
+    ],
+    "learning_objectives": [
+      "Dashboard / Management",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Tampilkan semua kategori dalam empat dimensi. Outlier dioperasionalkan sebagai ranking late rate, bukan uji statistik. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 52
+  },
+  {
+    "id": "KL-53",
+    "number": 53,
+    "topic": "Dashboard / Management",
+    "title": "Area investigasi operasional",
+    "difficulty": "Intermediate",
+    "business_question": "Area mana yang membutuhkan investigasi operasional lebih lanjut?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per rute yang perlu review",
+    "expected_output": [
+      "route_id",
+      "shipments",
+      "late_deliveries",
+      "lost",
+      "returned",
+      "on_time_rate_pct"
+    ],
+    "learning_objectives": [
+      "Dashboard / Management",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Filter volume >=30 dan setidaknya satu kondisi SLA <80%, loss >=5%, return >=10%. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 53
+  },
+  {
+    "id": "KL-54",
+    "number": 54,
+    "topic": "Dashboard / Management",
+    "title": "Prioritas peningkatan on-time",
+    "difficulty": "Intermediate",
+    "business_question": "Insight apa yang paling actionable untuk meningkatkan on-time delivery?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per top-10 route-service",
+    "expected_output": [
+      "route_id",
+      "service_type",
+      "eligible_delivered",
+      "late_deliveries",
+      "avg_late_days"
+    ],
+    "learning_objectives": [
+      "Dashboard / Management",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Prioritas tepat 10 kombinasi dengan late count terbesar; tie-break route_id, service_type ASC. Ini kandidat investigasi, bukan rekomendasi kausal. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 54
+  },
+  {
+    "id": "KL-55",
+    "number": 55,
+    "topic": "Dashboard / Management",
+    "title": "Scorecard layanan per bulan",
+    "difficulty": "Intermediate",
+    "business_question": "Bagaimana membangun scorecard yang menggabungkan volume, value, SLA, loss, dan return tanpa mengaburkan definisi masing-masing metrik?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per service dan bulan",
+    "expected_output": [
+      "pickup_month",
+      "service_type",
+      "shipments",
+      "transaction_value_idr",
+      "eligible_delivered",
+      "on_time",
+      "on_time_rate_pct",
+      "loss_rate_pct",
+      "return_rate_pct"
+    ],
+    "learning_objectives": [
+      "Dashboard / Management",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Denominator loss/return semua shipment dalam bulan-layanan; SLA eligible delivered. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": 55
+  },
+  {
+    "id": "KL-56",
+    "number": 56,
+    "topic": "Tren & Window Functions",
+    "title": "Pertumbuhan month-over-month",
+    "difficulty": "Advanced",
+    "business_question": "Bagaimana pertumbuhan volume dan nilai transaksi month-over-month?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per bulan",
+    "expected_output": [
+      "pickup_month",
+      "shipments",
+      "transaction_value_idr",
+      "previous_shipments",
+      "previous_value_idr",
+      "volume_growth_pct",
+      "value_growth_pct"
+    ],
+    "learning_objectives": [
+      "Tren & Window Functions",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "LAG berdasarkan bulan pickup; bulan pertama memiliki growth NULL. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
+  },
+  {
+    "id": "KL-57",
+    "number": 57,
+    "topic": "Tren & Window Functions",
+    "title": "Rolling average tiga bulan",
+    "difficulty": "Advanced",
+    "business_question": "Bagaimana rolling average tiga bulan untuk volume shipment?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per bulan",
+    "expected_output": [
+      "pickup_month",
+      "shipments",
+      "rolling_3_month_avg"
+    ],
+    "learning_objectives": [
+      "Tren & Window Functions",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Jendela sampai 3 bulan teramati; dua bulan pertama memakai jendela parsial. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
+  },
+  {
+    "id": "KL-58",
+    "number": 58,
+    "topic": "Tren & Window Functions",
+    "title": "Nilai transaksi kumulatif",
+    "difficulty": "Intermediate",
+    "business_question": "Berapa nilai transaksi kumulatif per bulan sepanjang periode dataset?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per bulan",
+    "expected_output": [
+      "pickup_month",
+      "transaction_value_idr",
+      "cumulative_value_idr"
+    ],
+    "learning_objectives": [
+      "Tren & Window Functions",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Kumulatif sepanjang dataset, tidak direset per tahun. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
+  },
+  {
+    "id": "KL-59",
+    "number": 59,
+    "topic": "Tren & Window Functions",
+    "title": "Top tiga rute bulanan",
+    "difficulty": "Advanced",
+    "business_question": "Apa tiga rute dengan volume tertinggi pada setiap bulan?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per bulan dan rute terpilih",
+    "expected_output": [
+      "pickup_month",
+      "route_id",
+      "shipments",
+      "route_rank"
+    ],
+    "learning_objectives": [
+      "Tren & Window Functions",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Tepat tiga per bulan; ties diputuskan route_id ASC. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
+  },
+  {
+    "id": "KL-60",
+    "number": 60,
+    "topic": "Tren & Window Functions",
+    "title": "Pola hari pickup",
+    "difficulty": "Intermediate",
+    "business_question": "Bagaimana volume, late rate, dan nilai transaksi menurut hari pickup?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per ISO weekday",
+    "expected_output": [
+      "pickup_weekday",
+      "shipments",
+      "transaction_value_idr",
+      "eligible_delivered",
+      "late_deliveries",
+      "late_rate_pct"
+    ],
+    "learning_objectives": [
+      "Tren & Window Functions",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "ISO weekday: 1 Senin sampai 7 Minggu. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
+  },
+  {
+    "id": "KL-61",
+    "number": 61,
+    "topic": "Customer & Cohort",
+    "title": "Pelanggan shipment pertama",
+    "difficulty": "Intermediate",
+    "business_question": "Berapa jumlah pelanggan baru yang melakukan shipment pertama setiap bulan?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per bulan pertama aktif",
+    "expected_output": [
+      "first_shipment_month",
+      "new_active_customers"
+    ],
+    "learning_objectives": [
+      "Customer & Cohort",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Baru berarti shipment pertama yang teramati, bukan registration_date. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
+  },
+  {
+    "id": "KL-62",
+    "number": 62,
+    "topic": "Customer & Cohort",
+    "title": "Retensi satu bulan cohort",
+    "difficulty": "Advanced",
+    "business_question": "Bagaimana retensi pelanggan pada bulan berikutnya setelah bulan shipment pertama?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per cohort matang",
+    "expected_output": [
+      "cohort_month",
+      "cohort_customers",
+      "retained_next_month",
+      "retention_pct"
+    ],
+    "learning_objectives": [
+      "Customer & Cohort",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Keluarkan cohort pada bulan terakhir dataset karena observasi bulan berikutnya belum tersedia. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
+  },
+  {
+    "id": "KL-63",
+    "number": 63,
+    "topic": "Customer & Cohort",
+    "title": "Pelanggan tidak aktif 90 hari",
+    "difficulty": "Intermediate",
+    "business_question": "Siapa pelanggan tidak aktif selama lebih dari 90 hari relatif terhadap pickup terakhir dataset?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per pelanggan tidak aktif",
+    "expected_output": [
+      "customer_id",
+      "last_pickup",
+      "inactive_days"
+    ],
+    "learning_objectives": [
+      "Customer & Cohort",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Hanya pelanggan yang pernah mengirim; anchor adalah MAX(pickup_date), bukan tanggal komputer. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
+  },
+  {
+    "id": "KL-64",
+    "number": 64,
+    "topic": "Customer & Cohort",
+    "title": "Kontribusi pelanggan per desil",
+    "difficulty": "Advanced",
+    "business_question": "Bagaimana kontribusi nilai transaksi pelanggan menurut kelompok desil?",
+    "required_tables": [
+      "customers",
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris per desil",
+    "expected_output": [
+      "value_decile",
+      "customers",
+      "transaction_value_idr",
+      "value_share_pct"
+    ],
+    "learning_objectives": [
+      "Customer & Cohort",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Desil 1 adalah pelanggan bernilai tertinggi; hanya customer aktif. Ties customer_id ASC. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
+  },
+  {
+    "id": "KL-65",
+    "number": 65,
+    "topic": "Customer & Cohort",
+    "title": "Pelanggan multilarayanan",
+    "difficulty": "Intermediate",
+    "business_question": "Berapa porsi pelanggan yang menggunakan lebih dari satu jenis layanan?",
+    "required_tables": [
+      "shipments"
+    ],
+    "analytical_grain": "Satu baris keseluruhan",
+    "expected_output": [
+      "active_customers",
+      "multi_service_customers",
+      "multi_service_pct"
+    ],
+    "learning_objectives": [
+      "Customer & Cohort",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Denominator seluruh customer yang pernah mengirim. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
+  },
+  {
+    "id": "KL-66",
+    "number": 66,
+    "topic": "Tracking Lanjutan",
+    "title": "Frekuensi transisi status",
+    "difficulty": "Advanced",
+    "business_question": "Bagaimana transisi antarstatus tracking dan frekuensinya?",
+    "required_tables": [
+      "status_history"
+    ],
+    "analytical_grain": "Satu baris per pasangan status",
+    "expected_output": [
+      "previous_status",
+      "next_status",
+      "transitions"
+    ],
+    "learning_objectives": [
+      "Tracking Lanjutan",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Urutan timestamp dan record_id; event pertama tidak punya transisi asal. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
+  },
+  {
+    "id": "KL-67",
+    "number": 67,
+    "topic": "Tracking Lanjutan",
+    "title": "Waktu antarstatus tracking",
+    "difficulty": "Advanced",
+    "business_question": "Berapa rata-rata jeda jam antar-event menurut status asal dan tujuan?",
+    "required_tables": [
+      "status_history"
+    ],
+    "analytical_grain": "Satu baris per pasangan status",
+    "expected_output": [
+      "previous_status",
+      "next_status",
+      "transitions",
+      "avg_gap_hours"
+    ],
+    "learning_objectives": [
+      "Tracking Lanjutan",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Sertakan jeda nol jam; tidak menghitung event pertama. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
+  },
+  {
+    "id": "KL-68",
+    "number": 68,
+    "topic": "Tracking Lanjutan",
+    "title": "Pemulihan failed delivery",
+    "difficulty": "Intermediate",
+    "business_question": "Berapa shipment dengan failed delivery yang kemudian memiliki event delivered?",
+    "required_tables": [
+      "status_history"
+    ],
+    "analytical_grain": "Satu baris keseluruhan",
+    "expected_output": [
+      "failed_shipments",
+      "recovered_shipments"
+    ],
+    "learning_objectives": [
+      "Tracking Lanjutan",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Recovered = delivered timestamp lebih besar daripada timestamp failed pertama, status akhir shipment tidak dipakai. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
+  },
+  {
+    "id": "KL-69",
+    "number": 69,
+    "topic": "Tracking Lanjutan",
+    "title": "Kesesuaian status terakhir",
+    "difficulty": "Intermediate",
+    "business_question": "Bagaimana kesesuaian status shipment dengan event tracking terakhir?",
+    "required_tables": [
+      "shipments",
+      "status_history"
+    ],
+    "analytical_grain": "Satu baris per status shipment dan latest event",
+    "expected_output": [
+      "shipment_status",
+      "last_event_status",
+      "shipments",
+      "status_matches"
+    ],
+    "learning_objectives": [
+      "Tracking Lanjutan",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
+    ],
+    "limitations": "Mapping returned ke returned_to_sender; status lain exact match. NULL history menghasilkan NULL match. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
+  },
+  {
+    "id": "KL-70",
+    "number": 70,
+    "topic": "Tracking Lanjutan",
+    "title": "Missing data tracking per status",
     "difficulty": "Beginner",
-    "business_question": "Return the three hours with the most orders.",
+    "business_question": "Berapa banyak event tracking dengan timestamp atau lokasi kosong per status?",
     "required_tables": [
-      "orders"
+      "status_history"
     ],
-    "analytical_grain": "Up to three rows",
+    "analytical_grain": "Satu baris per status event",
     "expected_output": [
-      "order_hour",
-      "order_count"
+      "status",
+      "events",
+      "missing_timestamp",
+      "missing_location"
     ],
     "learning_objectives": [
-      "Peak Hour",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Tracking Lanjutan",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Missing lokasi meliputi NULL dan string kosong. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
   },
   {
-    "id": "PEAK-03",
-    "topic": "Peak Hour",
-    "title": "Revenue by hour",
+    "id": "KL-71",
+    "number": 71,
+    "topic": "Analitik Lanjutan",
+    "title": "Tarif aktual versus katalog",
     "difficulty": "Intermediate",
-    "business_question": "Aggregate recorded order revenue by hour; interpret as revenue distribution, not necessarily customer traffic quality.",
+    "business_question": "Bagaimana perbandingan tarif transaksi per kg dengan tarif katalog regular dan express?",
     "required_tables": [
-      "orders"
+      "routes",
+      "shipments"
     ],
-    "analytical_grain": "One row per hour present",
+    "analytical_grain": "Satu baris per regular/express",
     "expected_output": [
-      "order_hour",
-      "revenue"
+      "service_type",
+      "shipments",
+      "avg_actual_price_per_kg",
+      "avg_catalog_price_per_kg",
+      "avg_gap_per_kg"
     ],
     "learning_objectives": [
-      "Peak Hour",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Analitik Lanjutan",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Rata-rata sederhana per shipment; bukan weighted average. Gap tidak diasumsikan sebagai kesalahan penagihan. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
   },
   {
-    "id": "PEAK-04",
-    "topic": "Peak Hour",
-    "title": "Order count and average amount by hour",
-    "difficulty": "Intermediate",
-    "business_question": "Compare order volume and average order amount for each hour.",
-    "required_tables": [
-      "orders"
-    ],
-    "analytical_grain": "One row per hour present",
-    "expected_output": [
-      "order_hour",
-      "order_count",
-      "average_order_amount"
-    ],
-    "learning_objectives": [
-      "Peak Hour",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "TREND-01",
-    "topic": "Monthly Revenue Trends",
-    "title": "Monthly revenue",
+    "id": "KL-72",
+    "number": 72,
+    "topic": "Analitik Lanjutan",
+    "title": "Estimasi same-day",
     "difficulty": "Beginner",
-    "business_question": "Aggregate recorded revenue by calendar month across the available data.",
+    "business_question": "Berapa shipment same_day dengan estimasi delivery berbeda dari tanggal pickup?",
     "required_tables": [
-      "orders"
+      "shipments"
     ],
-    "analytical_grain": "One row per month with orders",
+    "analytical_grain": "Satu baris keseluruhan",
     "expected_output": [
-      "month",
-      "revenue"
+      "same_day_shipments",
+      "estimate_not_same_day",
+      "missing_dates"
     ],
     "learning_objectives": [
-      "Monthly Revenue Trends",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Analitik Lanjutan",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Periksa estimasi, bukan actual_delivery; NULL dipisah. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
   },
   {
-    "id": "TREND-02",
-    "topic": "Monthly Revenue Trends",
-    "title": "Monthly order volume",
-    "difficulty": "Beginner",
-    "business_question": "Count orders by month and inspect whether months have differing volumes.",
+    "id": "KL-73",
+    "number": 73,
+    "topic": "Analitik Lanjutan",
+    "title": "Durasi estimasi versus katalog",
+    "difficulty": "Intermediate",
+    "business_question": "Bagaimana selisih estimasi durasi shipment dengan estimasi katalog rute untuk regular dan express?",
     "required_tables": [
-      "orders"
+      "routes",
+      "shipments"
     ],
-    "analytical_grain": "One row per month with orders",
+    "analytical_grain": "Satu baris per regular/express",
     "expected_output": [
-      "month",
-      "order_count"
+      "service_type",
+      "shipments",
+      "avg_estimated_days",
+      "avg_catalog_days",
+      "different_estimates"
     ],
     "learning_objectives": [
-      "Monthly Revenue Trends",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Analitik Lanjutan",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Selisih hari kalender; tidak mengasumsikan hari kerja. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
   },
   {
-    "id": "TREND-03",
-    "topic": "Monthly Revenue Trends",
-    "title": "Year-over-year monthly revenue comparison",
+    "id": "KL-74",
+    "number": 74,
+    "topic": "Analitik Lanjutan",
+    "title": "Top lima kontribusi rute per layanan",
     "difficulty": "Advanced",
-    "business_question": "Compare revenue for the same calendar month across years where data exists; do not assume full-year coverage.",
+    "business_question": "Apa lima rute dengan konsentrasi nilai transaksi terbesar di masing-masing layanan?",
     "required_tables": [
-      "orders"
+      "shipments"
     ],
-    "analytical_grain": "One row per year-month",
+    "analytical_grain": "Satu baris per layanan dan rute terpilih",
     "expected_output": [
-      "month",
-      "revenue",
-      "previous_year_revenue"
+      "service_type",
+      "route_id",
+      "transaction_value_idr",
+      "route_rank",
+      "service_value_share_pct"
     ],
     "learning_objectives": [
-      "Monthly Revenue Trends",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Analitik Lanjutan",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Tepat lima rute per layanan; share denominator seluruh rute layanan, bukan hanya top 5. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
   },
   {
-    "id": "TREND-04",
-    "topic": "Monthly Revenue Trends",
-    "title": "Month-over-month revenue change",
-    "difficulty": "Intermediate",
-    "business_question": "Calculate the absolute difference from the prior observed month.",
-    "required_tables": [
-      "orders"
-    ],
-    "analytical_grain": "One row per month with orders",
-    "expected_output": [
-      "month",
-      "revenue",
-      "previous_month_revenue",
-      "revenue_change"
-    ],
-    "learning_objectives": [
-      "Monthly Revenue Trends",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "PAY-01",
-    "topic": "Payment Method Trends",
-    "title": "Order count by payment method",
-    "difficulty": "Beginner",
-    "business_question": "Count orders for each stored payment method.",
-    "required_tables": [
-      "orders"
-    ],
-    "analytical_grain": "One row per payment method",
-    "expected_output": [
-      "payment_method",
-      "order_count"
-    ],
-    "learning_objectives": [
-      "Payment Method Trends",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "PAY-02",
-    "topic": "Payment Method Trends",
-    "title": "Year and payment method order count",
-    "difficulty": "Intermediate",
-    "business_question": "Compare order counts by year and stored payment method.",
-    "required_tables": [
-      "orders"
-    ],
-    "analytical_grain": "One row per year and payment method",
-    "expected_output": [
-      "order_year",
-      "payment_method",
-      "order_count"
-    ],
-    "learning_objectives": [
-      "Payment Method Trends",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "PAY-03",
-    "topic": "Payment Method Trends",
-    "title": "Revenue by payment method",
-    "difficulty": "Beginner",
-    "business_question": "Sum recorded order revenue by payment method.",
-    "required_tables": [
-      "orders"
-    ],
-    "analytical_grain": "One row per payment method",
-    "expected_output": [
-      "payment_method",
-      "revenue"
-    ],
-    "learning_objectives": [
-      "Payment Method Trends",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "PAY-04",
-    "topic": "Payment Method Trends",
-    "title": "Payment method share within each year",
+    "id": "KL-75",
+    "number": 75,
+    "topic": "Analitik Lanjutan",
+    "title": "Target SLA 90 persen",
     "difficulty": "Advanced",
-    "business_question": "Calculate each payment method's percentage of order count within its year.",
+    "business_question": "Berapa shipment yang dibutuhkan untuk mencapai target on-time 90% jika shipment tambahan seluruhnya on-time?",
     "required_tables": [
-      "orders"
+      "shipments"
     ],
-    "analytical_grain": "One row per year and payment method",
+    "analytical_grain": "Satu baris per layanan",
     "expected_output": [
-      "order_year",
-      "payment_method",
-      "order_count",
-      "pct_of_year_orders"
+      "service_type",
+      "eligible_delivered",
+      "on_time",
+      "on_time_rate_pct",
+      "additional_on_time_needed"
     ],
     "learning_objectives": [
-      "Payment Method Trends",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
+      "Analitik Lanjutan",
+      "PostgreSQL",
+      "Grain dan denominator yang konsisten"
     ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "AOV-01",
-    "topic": "AOV by Order Type",
-    "title": "AOV and order count by order type",
-    "difficulty": "Intermediate",
-    "business_question": "Calculate average order value as SUM(total_amount) divided by order count; show order count beside AOV.",
-    "required_tables": [
-      "orders"
-    ],
-    "analytical_grain": "One row per order type",
-    "expected_output": [
-      "order_type",
-      "order_count",
-      "aov"
-    ],
-    "learning_objectives": [
-      "AOV by Order Type",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "AOV-02",
-    "topic": "AOV by Order Type",
-    "title": "Highest-AOV order type",
-    "difficulty": "Intermediate",
-    "business_question": "Return the order type or types with the highest average order amount.",
-    "required_tables": [
-      "orders"
-    ],
-    "analytical_grain": "One row per top order type",
-    "expected_output": [
-      "order_type",
-      "order_count",
-      "aov"
-    ],
-    "learning_objectives": [
-      "AOV by Order Type",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "AOV-03",
-    "topic": "AOV by Order Type",
-    "title": "Median order amount by order type",
-    "difficulty": "Advanced",
-    "business_question": "Compare median order amount by type using PostgreSQL percentile_cont.",
-    "required_tables": [
-      "orders"
-    ],
-    "analytical_grain": "One row per order type",
-    "expected_output": [
-      "order_type",
-      "median_order_amount"
-    ],
-    "learning_objectives": [
-      "AOV by Order Type",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "CONTR-01",
-    "topic": "Menu Revenue Contribution",
-    "title": "Menu revenue from order detail subtotals",
-    "difficulty": "Intermediate",
-    "business_question": "Calculate menu-level revenue using order_details.subtotal. Explicitly note this is a detail-level metric and may not equal orders.total_amount.",
-    "required_tables": [
-      "order_details",
-      "menu_items"
-    ],
-    "analytical_grain": "One row per sold menu item",
-    "expected_output": [
-      "item_id",
-      "item_name",
-      "detail_revenue"
-    ],
-    "learning_objectives": [
-      "Menu Revenue Contribution",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "CONTR-02",
-    "topic": "Menu Revenue Contribution",
-    "title": "Percentage contribution of menu revenue",
-    "difficulty": "Intermediate",
-    "business_question": "Calculate each item's share of total order-detail subtotal revenue using the same denominator throughout.",
-    "required_tables": [
-      "order_details",
-      "menu_items"
-    ],
-    "analytical_grain": "One row per sold menu item",
-    "expected_output": [
-      "item_id",
-      "item_name",
-      "detail_revenue",
-      "pct_of_detail_revenue"
-    ],
-    "learning_objectives": [
-      "Menu Revenue Contribution",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "CONTR-03",
-    "topic": "Menu Revenue Contribution",
-    "title": "Cumulative menu revenue contribution",
-    "difficulty": "Advanced",
-    "business_question": "Rank menu items by detail revenue and calculate cumulative share of detail revenue.",
-    "required_tables": [
-      "order_details",
-      "menu_items"
-    ],
-    "analytical_grain": "One row per sold menu item",
-    "expected_output": [
-      "item_name",
-      "detail_revenue",
-      "cumulative_pct"
-    ],
-    "learning_objectives": [
-      "Menu Revenue Contribution",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "CONTR-04",
-    "topic": "Menu Revenue Contribution",
-    "title": "Compare detail subtotal and extended unit price",
-    "difficulty": "Advanced",
-    "business_question": "Compare aggregated detail subtotals with quantity multiplied by unit_price to inspect data consistency.",
-    "required_tables": [
-      "order_details"
-    ],
-    "analytical_grain": "One row per item",
-    "expected_output": [
-      "item_id",
-      "subtotal_sum",
-      "extended_price_sum",
-      "difference"
-    ],
-    "learning_objectives": [
-      "Menu Revenue Contribution",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "ENG-01",
-    "topic": "Menu Engineering",
-    "title": "Gross margin per menu item from menu price and cost",
-    "difficulty": "Intermediate",
-    "business_question": "Calculate listed unit gross margin (price minus cost_price). This is not realized historical profit.",
-    "required_tables": [
-      "menu_items"
-    ],
-    "analytical_grain": "One row per menu item",
-    "expected_output": [
-      "item_id",
-      "name",
-      "price",
-      "cost_price",
-      "unit_margin"
-    ],
-    "learning_objectives": [
-      "Menu Engineering",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "ENG-02",
-    "topic": "Menu Engineering",
-    "title": "Quantity sold and listed unit margin",
-    "difficulty": "Advanced",
-    "business_question": "Combine sales quantity and listed unit margin. Treat quantity times listed margin as an estimate, not verified realized profit.",
-    "required_tables": [
-      "menu_items",
-      "order_details"
-    ],
-    "analytical_grain": "One row per sold menu item",
-    "expected_output": [
-      "item_id",
-      "name",
-      "quantity_sold",
-      "unit_margin",
-      "estimated_margin"
-    ],
-    "learning_objectives": [
-      "Menu Engineering",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "ENG-03",
-    "topic": "Menu Engineering",
-    "title": "Classify items by median sales quantity",
-    "difficulty": "Advanced",
-    "business_question": "Create an explicitly data-relative popularity classification using median quantity sold among items with sales. This is not a universal menu-engineering threshold.",
-    "required_tables": [
-      "menu_items",
-      "order_details"
-    ],
-    "analytical_grain": "One row per sold menu item",
-    "expected_output": [
-      "item_id",
-      "name",
-      "quantity_sold",
-      "popularity_segment"
-    ],
-    "learning_objectives": [
-      "Menu Engineering",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "CROSS-01",
-    "topic": "Cross-Sell",
-    "title": "Count unique item pairs in the same order",
-    "difficulty": "Advanced",
-    "business_question": "Count unique unordered pairs of distinct menu items appearing in the same order. Each item pair should occur once per order even if quantity exceeds one.",
-    "required_tables": [
-      "order_details",
-      "menu_items"
-    ],
-    "analytical_grain": "One row per unordered item pair",
-    "expected_output": [
-      "item_a",
-      "item_b",
-      "orders_together"
-    ],
-    "learning_objectives": [
-      "Cross-Sell",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "CROSS-02",
-    "topic": "Cross-Sell",
-    "title": "Show names for most common item pairs",
-    "difficulty": "Advanced",
-    "business_question": "Return the ten most frequently co-purchased unique menu item pairs with readable item names.",
-    "required_tables": [
-      "order_details",
-      "menu_items"
-    ],
-    "analytical_grain": "Up to ten rows per unique item pair",
-    "expected_output": [
-      "item_a",
-      "item_b",
-      "orders_together"
-    ],
-    "learning_objectives": [
-      "Cross-Sell",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "EFF-01",
-    "topic": "Outlet and Staff Efficiency",
-    "title": "Staff count by outlet and status",
-    "difficulty": "Intermediate",
-    "business_question": "Count staff by outlet and stored staff status. Do not assume a status means active without inspecting values.",
-    "required_tables": [
-      "staff",
-      "outlets"
-    ],
-    "analytical_grain": "One row per outlet and staff status",
-    "expected_output": [
-      "outlet_name",
-      "staff_status",
-      "staff_count"
-    ],
-    "learning_objectives": [
-      "Outlet and Staff Efficiency",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "EFF-02",
-    "topic": "Outlet and Staff Efficiency",
-    "title": "Revenue per recorded staff member",
-    "difficulty": "Advanced",
-    "business_question": "Calculate outlet revenue divided by the count of staff records at that outlet. This is a crude ratio, not a complete efficiency measure; staffing period/status needs interpretation.",
-    "required_tables": [
-      "orders",
-      "outlets",
-      "staff"
-    ],
-    "analytical_grain": "One row per eligible outlet",
-    "expected_output": [
-      "outlet_name",
-      "revenue",
-      "staff_count",
-      "revenue_per_staff_record"
-    ],
-    "learning_objectives": [
-      "Outlet and Staff Efficiency",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "EFF-03",
-    "topic": "Outlet and Staff Efficiency",
-    "title": "Order volume by outlet and staff role",
-    "difficulty": "Intermediate",
-    "business_question": "Count orders attributed to staff by role and outlet. Interpret as recorded order attribution, not a productivity measure without scheduling data.",
-    "required_tables": [
-      "orders",
-      "staff",
-      "outlets"
-    ],
-    "analytical_grain": "One row per outlet and staff role",
-    "expected_output": [
-      "outlet_name",
-      "role",
-      "order_count"
-    ],
-    "learning_objectives": [
-      "Outlet and Staff Efficiency",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "DQ-01",
-    "topic": "Data Quality",
-    "title": "Check order total NULLs and negatives",
-    "difficulty": "Intermediate",
-    "business_question": "Summarize NULL, negative, zero, and positive total_amount records.",
-    "required_tables": [
-      "orders"
-    ],
-    "analytical_grain": "One summary row",
-    "expected_output": [
-      "null_amounts",
-      "negative_amounts",
-      "zero_amounts",
-      "positive_amounts"
-    ],
-    "learning_objectives": [
-      "Data Quality",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "DQ-02",
-    "topic": "Data Quality",
-    "title": "Check duplicate order-detail keys",
-    "difficulty": "Intermediate",
-    "business_question": "Find order_details detail_id values that appear more than once.",
-    "required_tables": [
-      "order_details"
-    ],
-    "analytical_grain": "One row per duplicated key; possibly empty",
-    "expected_output": [
-      "detail_id",
-      "occurrences"
-    ],
-    "learning_objectives": [
-      "Data Quality",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "DQ-03",
-    "topic": "Data Quality",
-    "title": "Compare order and detail revenue totals",
-    "difficulty": "Advanced",
-    "business_question": "Compare the sum of orders.total_amount with sum of order_details.subtotal. This is a diagnostic only; do not assume the two definitions are interchangeable.",
-    "required_tables": [
-      "orders",
-      "order_details"
-    ],
-    "analytical_grain": "One summary row",
-    "expected_output": [
-      "order_revenue",
-      "detail_subtotal_revenue",
-      "difference"
-    ],
-    "learning_objectives": [
-      "Data Quality",
-      "SQL result interpretation",
-      "Check the stated grain and limitations"
-    ],
-    "limitations": "Reference query is a proposed baseline. Verify it against the live PostgreSQL schema before treating the exercise as validated.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "SAL-01",
-    "topic": "Staff Salary Analysis",
-    "title": "Monthly salary by staff role",
-    "difficulty": "Beginner",
-    "business_question": "Compare the recorded monthly salary by staff role using the monthly_salary column present in staff.csv. Show staff count and average monthly salary per role.",
-    "required_tables": [
-      "staff"
-    ],
-    "analytical_grain": "One row per staff role",
-    "expected_output": [
-      "role",
-      "staff_count",
-      "average_monthly_salary"
-    ],
-    "learning_objectives": [
-      "GROUP BY",
-      "COUNT",
-      "AVG",
-      "Interpreting salary metrics"
-    ],
-    "limitations": "Requires staff.monthly_salary to exist in the live PostgreSQL table. The CSV contains this column, but the database schema must be verified before running.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
-  },
-  {
-    "id": "SAL-02",
-    "topic": "Staff Salary Analysis",
-    "title": "Monthly salary distribution by outlet",
-    "difficulty": "Intermediate",
-    "business_question": "For each outlet, calculate the number of staff records and average recorded monthly salary. Preserve outlets without matching staff records.",
-    "required_tables": [
-      "staff",
-      "outlets"
-    ],
-    "analytical_grain": "One row per outlet",
-    "expected_output": [
-      "outlet_id",
-      "outlet_name",
-      "staff_count",
-      "average_monthly_salary"
-    ],
-    "learning_objectives": [
-      "LEFT JOIN",
-      "GROUP BY",
-      "COUNT",
-      "AVG",
-      "NULL handling"
-    ],
-    "limitations": "Requires staff.monthly_salary to exist in the live PostgreSQL table. An average of NULL salaries remains NULL; do not treat missing salary as zero without a documented rule.",
-    "validation_policy": "Compare returned column names and ordered columns; compare row multisets unless row ordering is explicitly part of the exercise."
+    "limitations": "Selesaikan (on_time+x)/(eligible+x)>=0,90; x bilangan bulat nonnegatif. Semua tambahan diasumsikan eligible dan on-time. Nilai transaksi bukan profit. Bulatkan rate/persen dan rata-rata ke 2 desimal, kecuali dinyatakan lain. On-time: status delivered, actual_delivery dan estimated_delivery terisi; actual_delivery <= estimated_delivery. Tanggal aktual sebelum pickup diaudit terpisah, bukan dibersihkan diam-diam.",
+    "validation_policy": "Nama dan urutan kolom harus sesuai Expected output. Urutan baris diabaikan; duplikat tetap dihitung.",
+    "source_question": null
   }
 ]

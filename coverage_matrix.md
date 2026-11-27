@@ -1,29 +1,81 @@
-# Exercise coverage matrix
+# Cakupan 75 business question
 
-This matrix maps the included exercise set to the documented ten business questions. The exercise definitions and SQL are proposed implementation artifacts, not verified query results. Run them against the live PostgreSQL database before treating an exercise as validated.
+55 pertanyaan sumber dipertahankan verbatim. 20 pertanyaan tambahan berada di docs/additional_business_questions.md. Semua referensi dijalankan di PostgreSQL 16 dengan role SELECT-only.
 
-| Business question | Exercise IDs | Objective / core SQL | Tables | Expected output | Validation |
-|---|---|---|---|---|---|
-| #1 Ranking Revenue per Gerai | REV-01–REV-05 | Revenue aggregation, eligible outlet population, ranking, status distribution | `orders`, `outlets` | Revenue by outlet, ranks, stored status counts | Result comparison; inspect status values and zero-order outlets |
-| #2 Menu Terlaris per Kategori | MENU-01–MENU-05 | Quantity sold, category aggregation, top-per-category ranking, unsold items | `menu_items`, `order_details` | Sales by item/category, top items, availability counts | Result comparison; verify category and quantity data |
-| #3 Jam Ramai (Peak Hour) | PEAK-01–PEAK-04 | Extract hour, count orders, revenue and average order amount | `orders` | Hourly orders and metrics | Result comparison; verify time range and null times |
-| #4 Tren Revenue Bulanan 2022–2025 | TREND-01–TREND-04 | Monthly aggregation, `LAG`, period comparisons | `orders` | Monthly revenue, order counts, period deltas | Result comparison; inspect actual date coverage and incomplete periods |
-| #5 Pergeseran Metode Bayar dari Tahun ke Tahun | PAY-01–PAY-04 | Payment method grouping, year trends, conditional percentage / window aggregation | `orders` | Payment method counts, revenue and yearly shares | Result comparison; inspect stored payment method values |
-| #6 AOV per Tipe Order | AOV-01–AOV-03 | Average, median, top order type | `orders` | AOV, volume, median by type | Result comparison; define population and inspect outliers |
-| #7 Kontribusi Revenue tiap Menu | CONTR-01–CONTR-04 | Detail subtotal, contribution %, cumulative share, subtotal consistency | `order_details`, `menu_items` | Menu revenue and contribution | Result comparison; reconcile detail subtotal with order-level revenue before interpretation |
-| #8 Menu Engineering Matrix (Boston Matrix) | ENG-01–ENG-03 | Listed unit margin, sales quantity, explicit median-based popularity segmentation | `menu_items`, `order_details` | Margin estimates and popularity segment | Result comparison; thresholds are data-relative and not universal |
-| #9 Cross-Sell: Item yang Sering Dibeli Bareng | CROSS-01–CROSS-02 | Self-join, unique unordered item pairs, count orders together | `order_details`, `menu_items` | Co-purchased item pairs | Result comparison; distinct item presence per order prevents quantity duplicates |
-| #10 Efisiensi Gerai: Revenue per Staff vs Turnover | EFF-01–EFF-03 | Staff status counts, revenue per staff record, order attribution | `orders`, `outlets`, `staff` | Outlet staffing and recorded revenue ratios | Result comparison; ratio is not a full efficiency metric; staffing period needs definition |
-| SQL fundamentals and data quality | FND-01–FND-05, DQ-01–DQ-03 | Projection, filtering, distinct, subquery, NULL, aggregate diagnostics | Relevant individual tables | Basic query outputs and data-quality summaries | Result comparison and manual inspection |
-
-## Curriculum skill mapping
-
-`curriculum_topics.json` maps 21 parent learning topics to the relevant exercise IDs and learning objectives. The sidebar groups exercises by business-analysis theme, while this file provides the SQL skill progression.
-
-## Count
-- Parent learning topics: 21 (see `curriculum_topics.json`).
-- Independently answerable exercises: 47.
-- Business-question coverage: all 10 are represented.
-- Completion status: **not verified**. No analysis should be marked complete until its reference SQL executes successfully, results are checked, and business interpretation is documented.
-
-| Staff Salary Analysis | SAL-01–SAL-02 | Average monthly salary by role and outlet | `staff`, `outlets` | Staff counts and average recorded monthly salary | Requires `staff.monthly_salary` to be present in the live PostgreSQL schema |
+| Latihan | Sumber | Judul | Baris hasil |
+|---|---|---|---|
+| KL-01 | 1 | Ringkasan KPI pengiriman | 1 |
+| KL-02 | 2 | Komposisi layanan | 3 |
+| KL-03 | 3 | Peringkat volume dan nilai layanan | 3 |
+| KL-04 | 4 | Delivery, loss, dan return rate | 1 |
+| KL-05 | 5 | Tren KPI bulanan | 37 |
+| KL-06 | 6 | Profil volume dan nilai layanan | 3 |
+| KL-07 | 7 | Layanan dengan SLA terbaik | 3 |
+| KL-08 | 8 | Nilai transaksi dan performa delivery | 3 |
+| KL-09 | 9 | Tingkat keterlambatan layanan | 3 |
+| KL-10 | 10 | Volume tinggi dan outcome buruk | 3 |
+| KL-11 | 11 | Peringkat volume rute | 80 |
+| KL-12 | 12 | Peringkat nilai transaksi rute | 80 |
+| KL-13 | 13 | Biaya rata-rata tertinggi dan terendah | 80 |
+| KL-14 | 14 | Ranking SLA rute | 80 |
+| KL-15 | 15 | Korelasi jarak dan durasi | 1 |
+| KL-16 | 16 | Risiko lost dan returned per rute | 80 |
+| KL-17 | 17 | Prioritas investigasi rute | 80 |
+| KL-18 | 18 | Business versus individual | 2 |
+| KL-19 | 19 | Nilai transaksi per segmen | 2 |
+| KL-20 | 20 | Biaya shipment per segmen | 2 |
+| KL-21 | 21 | Frekuensi shipment pelanggan | 600 |
+| KL-22 | 22 | Sepuluh pelanggan terbesar | 10 |
+| KL-23 | 23 | Outcome delivery per segmen | 8 |
+| KL-24 | 24 | Pola pelanggan volume tinggi | 135 |
+| KL-25 | 25 | Volume dan nilai jenis paket | 5 |
+| KL-26 | 26 | Distribusi berat paket | 5 |
+| KL-27 | 27 | Outlier berat dengan IQR | 5 |
+| KL-28 | 28 | Preferensi layanan menurut paket | 15 |
+| KL-29 | 29 | Berat, nilai, dan keterlambatan | 3 |
+| KL-30 | 30 | SLA on-time per layanan | 3 |
+| KL-31 | 31 | Rata-rata dan median keterlambatan | 1 |
+| KL-32 | 32 | Keterlambatan route-service | 239 |
+| KL-33 | 33 | Durasi aktual versus estimasi | 3 |
+| KL-34 | 34 | Delivered tanpa tanggal aktual | 1 |
+| KL-35 | 35 | Konflik status dan tracking | 1 |
+| KL-36 | 36 | Jumlah event rata-rata | 1 |
+| KL-37 | 37 | Frekuensi status event | 8 |
+| KL-38 | 38 | Shipment dengan failed delivery | 1 |
+| KL-39 | 39 | Frekuensi lokasi tracking | 74 |
+| KL-40 | 40 | Transit pickup ke delivered | 1 |
+| KL-41 | 41 | Pola event shipment bermasalah | 10 |
+| KL-42 | 42 | Audit urutan event | 1 |
+| KL-43 | 43 | Validasi customer dan route | 1 |
+| KL-44 | 44 | Keunikan tracking number | 1 |
+| KL-45 | 45 | Missing value setiap kolom | 37 |
+| KL-46 | 46 | Audit tanggal aktual delivered | 4 |
+| KL-47 | 47 | Audit kewajaran tanggal | 1 |
+| KL-48 | 48 | Cakupan histori tracking | 1 |
+| KL-49 | 49 | Audit duplikat dan foreign key | 7 |
+| KL-50 | 50 | Dampak missing tanggal pada SLA | 1 |
+| KL-51 | 51 | Scorecard operations manager | 3 |
+| KL-52 | 52 | Outlier multidimensi | 122 |
+| KL-53 | 53 | Area investigasi operasional | 80 |
+| KL-54 | 54 | Prioritas peningkatan on-time | 10 |
+| KL-55 | 55 | Scorecard layanan per bulan | 111 |
+| KL-56 | Tambahan | Pertumbuhan month-over-month | 37 |
+| KL-57 | Tambahan | Rolling average tiga bulan | 37 |
+| KL-58 | Tambahan | Nilai transaksi kumulatif | 37 |
+| KL-59 | Tambahan | Top tiga rute bulanan | 111 |
+| KL-60 | Tambahan | Pola hari pickup | 7 |
+| KL-61 | Tambahan | Pelanggan shipment pertama | 27 |
+| KL-62 | Tambahan | Retensi satu bulan cohort | 27 |
+| KL-63 | Tambahan | Pelanggan tidak aktif 90 hari | 356 |
+| KL-64 | Tambahan | Kontribusi pelanggan per desil | 10 |
+| KL-65 | Tambahan | Pelanggan multilarayanan | 1 |
+| KL-66 | Tambahan | Frekuensi transisi status | 19 |
+| KL-67 | Tambahan | Waktu antarstatus tracking | 19 |
+| KL-68 | Tambahan | Pemulihan failed delivery | 1 |
+| KL-69 | Tambahan | Kesesuaian status terakhir | 4 |
+| KL-70 | Tambahan | Missing data tracking per status | 8 |
+| KL-71 | Tambahan | Tarif aktual versus katalog | 2 |
+| KL-72 | Tambahan | Estimasi same-day | 1 |
+| KL-73 | Tambahan | Durasi estimasi versus katalog | 2 |
+| KL-74 | Tambahan | Top lima kontribusi rute per layanan | 15 |
+| KL-75 | Tambahan | Target SLA 90 persen | 3 |

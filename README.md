@@ -1,103 +1,57 @@
-# Sedukopi SQL Practice Lab
+# Kirimlaju SQL Practice Lab
 
-An interactive, browser-based SQL learning environment built around the Sedukopi dataset. Learners can practice PostgreSQL queries against a hosted Neon database, inspect real query results, validate answers against reference outputs, and track their learning progress locally.
+Aplikasi latihan PostgreSQL dengan **75 business question**, memakai tampilan dan interaksi [Sedukopi SQL Practice Lab](https://github.com/subhanaristiadi/sedukopi-sql-practice-lab).
 
-**Live app:** https://subhanaristiadi.github.io/sedukopi-sql-practice-lab/  
-**Source code:** https://github.com/subhanaristiadi/sedukopi-sql-practice-lab/
+- Aplikasi: https://subhanaristiadi.github.io/krimlaju-sql-practice-lab/
+- API: https://krimlaju-sql-practice-lab.onrender.com
+- Dataset simulasi: https://ngulikdata.com/datasets/kirimlaju
+- Seluruh 55 pertanyaan asli: `docs/kirimlaju_business_questions.md`
+- 20 tambahan: `docs/additional_business_questions.md`
+- Cakupan dan bukti query: `coverage_matrix.md`, `docs/reference_verification.json`
 
-**Dataset source:** https://ngulikdata.com/datasets/sedukopi
+## Fitur
 
-## Project context documentation
-
-For the relationship between this web app and the broader Sedukopi SQL analytics project, verified architecture, dataset notes, functional checks, and known limitations, see [docs/WEB_APP_PROJECT_CONTEXT.md](docs/WEB_APP_PROJECT_CONTEXT.md).
-
-## Project highlights
-
-- **47 SQL exercises** across 21 topics, from SQL fundamentals to more advanced analysis.
-- Business questions with required tables, analytical grain, expected output, and learning notes.
-- PostgreSQL query runner that returns real rows from the hosted database.
-- Answer validation that compares a learner's result with a server-side reference result.
-- Browser-based progress tracking, answer saving, personal notes, and progress import/export.
-- Read-only API design intended for a public practice dataset.
-
-## Architecture
-
-```text
-Learner's browser
-  └── GitHub Pages: static HTML/CSS/JavaScript
-        └── HTTPS API requests
-              └── Render: Flask + Gunicorn API
-                    └── Neon: PostgreSQL database
-```
-
-| Layer | Technology | Responsibility |
-|---|---|---|
-| Frontend | HTML, CSS, JavaScript, GitHub Pages | Exercise interface, SQL editor, results, progress UI |
-| Backend | Python, Flask, Gunicorn, SQLGlot, Flask-Limiter, Render | SQL parsing, execution, validation, request limits |
-| Database | PostgreSQL on Neon | Stores the Sedukopi practice tables |
-| Local progress | Browser `localStorage` | Saves completion status, SQL answers, and notes in the current browser |
+Editor SQL, hasil query PostgreSQL langsung, validasi hasil terhadap referensi server, reveal reference SQL, skema empat tabel, filter topik/kesulitan/status, catatan pribadi, progres lokal, dan ekspor/impor progres. CSS, tata letak, panel, warna, dan kontrol berasal dari Sedukopi.
 
 ## Dataset
 
-The database contains the following supplied Sedukopi tables:
+| Tabel | Baris | Grain |
+|---|---:|---|
+| customers | 600 | Pelanggan |
+| routes | 80 | Rute |
+| shipments | 4.000 | Pengiriman |
+| status_history | 12.747 | Event tracking |
+| Total | 17.427 | |
 
-| Table | Expected rows |
-|---|---:|
-| `outlets` | 20 |
-| `staff` | 120 |
-| `menu_items` | 80 |
-| `orders` | 5,000 |
-| `order_details` | 8,123 |
+CSV asli ada di `data/`; `data/manifest.json` mencatat SHA-256 dan jumlah baris. Skema PostgreSQL 16 berada di `schema.sql`. Data tidak dibersihkan diam-diam: 50 delivered tanpa actual_delivery tetap dipertahankan untuk latihan audit.
 
-The Neon seed workflow checks CSV headers and row counts and checks for orphaned foreign keys before committing the seed transaction. The public repository should not contain source CSVs, database passwords, `.env` files, or database connection strings.
+On-time memakai status delivered dengan actual_delivery dan estimated_delivery terisi. Numerator: actual_delivery <= estimated_delivery. Denominator: eligible delivered. Tanggal aktual sebelum pickup diaudit terpisah. Nilai `total_cost_idr` adalah nilai transaksi, bukan biaya operasi/profit. Jangan menggandakan KPI shipment dengan join langsung ke banyak event tracking.
 
-### Analytics conventions
+Setiap latihan memuat kontrak output, grain, filter, denominator, rounding, dan tie-breaker. Nama serta urutan kolom harus sama dengan Expected output; urutan baris diabaikan dan multiplicity tetap dibandingkan. Referensi adalah satu baseline SQL yang dapat diganti dengan query ekuivalen.
 
-- Use `orders.total_amount` for order-level revenue questions unless a business question explicitly defines another metric.
-- Keep order-level and order-detail-level analysis separate to avoid double counting after joins.
-- Exclude `temporarily_closed` outlets only for exercises whose stated business rule requires that exclusion.
-- Do not assume `SUM(order_details.subtotal)` is interchangeable with `SUM(orders.total_amount)` without verifying the metric.
+## Jalankan lokal
 
-## Features
+```powershell
+python -m pip install -r requirements.txt
+# Isi .env dari .env.example dengan URL role kirimlaju_reader.
+python server.py
+# Di terminal lain untuk frontend:
+python -m http.server 5500 --bind 127.0.0.1
+```
 
-1. **Exercise browser:** search and filter by topic, difficulty, and completion status.
-2. **SQL editor:** submit PostgreSQL `SELECT` queries and inspect returned columns and rows.
-3. **Answer validation:** execute the submitted query and the trusted reference query independently, then compare outputs according to the exercise policy.
-4. **Progress tools:** save answers and notes locally; export/import progress as JSON; reset local progress.
-5. **API safety controls:** accept one SELECT-style query, parse SQL with SQLGlot, run database sessions in read-only mode, verify the hosted database role, and enforce query/result/request limits and per-IP rate limits.
+Frontend menggunakan API Render. Untuk API lokal, ganti `API_BASE` pada index.html ke `http://127.0.0.1:8000`.
 
-## Validation performed
+```powershell
+python -m unittest discover -s tests -v
+python verify_curriculum.py
+```
 
-The following functional checks were performed against the deployed application:
+`build_curriculum.py` membangun ulang materi. Setelah dijalankan, jalankan `verify_curriculum.py` untuk mengeksekusi semua referensi, melengkapi Expected output, dan memperbarui bukti verifikasi. Verifikasi menggunakan role SELECT-only pada database dengan dataset yang sesuai.
 
-- A valid outlet-details query returned 20 rows and 4 columns, and the answer validator reported a match.
-- A query returning only `outlet_id` executed, but validation rejected it because its output did not match the expected columns.
-- A `DELETE FROM outlets ...` test was rejected by the API's SQL validation.
-- After a hard refresh, the browser still showed 1 completed exercise out of 47, confirming local progress persistence in the same browser profile.
-- The Render `/health` endpoint returned `status: ok`, `database: connected`, and database name `neondb` when opened directly.
+## Deployment
 
-**Browser note:** a browser/client blocker prevented the frontend's `/health` fetch and produced `ERR_BLOCKED_BY_CLIENT`. The frontend was updated to continue checking `/api/exercises`; when exercises load successfully, it displays `Backend connected (health check unavailable)`. This indicator means the health-check request failed while the exercises API succeeded, not that the health endpoint itself was verified by the frontend.
+GitHub Pages memakai workflow GitHub Actions yang mempublikasikan hanya `index.html` dan `.nojekyll`. API Flask/Gunicorn berjalan pada Render Free di Singapura. PostgreSQL 16 memakai project Neon terpisah. Konfigurasi langsung Render menjadi sumber kebenaran deployment; tidak ada Blueprint yang melakukan sinkronisasi ulang. Lihat `DEPLOYMENT.md`.
 
-These are basic functional checks, not a comprehensive security audit.
+API membatasi query ke satu SELECT/CTE, transaksi read-only, role tanpa CREATE atau hak tulis, timeout 10 detik, maksimum 1.000 baris / 1 MB, tiga query bersamaan per worker, dan 20 request per menit per endpoint/IP. Render Free dapat memerlukan waktu bangun saat lama tidak digunakan. Progres lokal tidak tersinkron lintas perangkat; ekspor untuk mencadangkannya.
 
-## Deployment overview
-
-See [`DEPLOYMENT.md`](DEPLOYMENT.md) for the full deployment procedure. The production layout is:
-
-- GitHub Pages serves the frontend from the repository root.
-- Render runs the Flask API from `server.py`.
-- Neon hosts PostgreSQL.
-- Render's `DATABASE_URL` must use the dedicated `sedukopi_reader` role, not the database owner/admin connection string.
-- The reader role should have only the privileges needed to connect and read the required tables.
-
-Never commit `.env`, passwords, connection strings, or source CSVs. Use a separate practice database rather than a private or production database.
-
-## Limitations
-
-- There are no user accounts or cloud-synced progress. Progress is stored in `localStorage` for the current browser profile and may not follow the user to another device or browser.
-- The health-check indicator can report that its check is unavailable if a browser extension blocks `/health`, even while the exercise API remains usable.
-- Functional checks do not replace ongoing dependency updates, monitoring, or a formal security review.
-
-## Skills demonstrated
-
-PostgreSQL, SQL analytics, Python, Flask API development, SQL parsing and validation, relational data loading, database privilege design, API safety controls, GitHub Pages, Render, Neon PostgreSQL, and deployment troubleshooting.
+UI template: Sedukopi SQL Practice Lab oleh subhanaristiadi. Dataset: Kirimlaju dari NgulikData.

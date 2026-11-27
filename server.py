@@ -1,4 +1,4 @@
-"""Sedukopi SQL Practice Lab API for Render + Neon, with optional local development."""
+"""Kirimlaju SQL Practice Lab API for Render + Neon, with optional local development."""
 from __future__ import annotations
 import json, math, os, re, threading, time
 from collections import Counter
@@ -19,10 +19,10 @@ load_dotenv(BASE_DIR / ".env")
 REFERENCE_PATH = BASE_DIR / "reference_queries.json"
 EXERCISES_PATH = BASE_DIR / "exercises.json"
 RENDER_ENV = os.getenv("RENDER", "").lower() == "true"
-PORT = int(os.getenv("PORT", os.getenv("SEDUKOPI_APP_PORT", "8000")))
-MAX_ROWS = max(1, min(int(os.getenv("SEDUKOPI_MAX_ROWS", os.getenv("MAX_ROWS", "500"))), 5000))
-MAX_RESULT_BYTES = max(100_000, min(int(os.getenv("SEDUKOPI_MAX_RESULT_BYTES", "1000000")), 2_000_000))
-QUERY_TIMEOUT_MS = max(1000, min(int(os.getenv("SEDUKOPI_QUERY_TIMEOUT_MS", os.getenv("STATEMENT_TIMEOUT_MS", "10000"))), 30000))
+PORT = int(os.getenv("PORT", os.getenv("KIRIMLAJU_APP_PORT", "8000")))
+MAX_ROWS = max(1, min(int(os.getenv("KIRIMLAJU_MAX_ROWS", os.getenv("MAX_ROWS", "1000"))), 5000))
+MAX_RESULT_BYTES = max(100_000, min(int(os.getenv("KIRIMLAJU_MAX_RESULT_BYTES", "1000000")), 2_000_000))
+QUERY_TIMEOUT_MS = max(1000, min(int(os.getenv("KIRIMLAJU_QUERY_TIMEOUT_MS", os.getenv("STATEMENT_TIMEOUT_MS", "10000"))), 30000))
 LOCK_TIMEOUT_MS = max(500, min(int(os.getenv("LOCK_TIMEOUT_MS", "2000")), 10000))
 MAX_SQL_CHARS = 20000
 MAX_REQUEST_BYTES = 50000
@@ -30,7 +30,7 @@ REQUIRE_NON_SUPERUSER = os.getenv("REQUIRE_NON_SUPERUSER", "true" if RENDER_ENV 
 DEFAULT_ORIGINS = "https://subhanaristiadi.github.io,http://127.0.0.1:5500,http://localhost:5500,http://127.0.0.1:8000,http://localhost:8000"
 CORS_ALLOWED_ORIGINS = {x.strip().rstrip("/") for x in os.getenv("CORS_ALLOWED_ORIGINS", DEFAULT_ORIGINS).split(",") if x.strip()}
 WRITE_PRIVILEGES = ("INSERT", "UPDATE", "DELETE", "TRUNCATE", "REFERENCES", "TRIGGER")
-TABLES = ("outlets", "staff", "menu_items", "orders", "order_details")
+TABLES = ("customers", "routes", "shipments", "status_history")
 FORBIDDEN_NODES = (exp.Insert, exp.Update, exp.Delete, exp.Create, exp.Drop, exp.Alter, exp.Command, exp.Copy, exp.Transaction, exp.Grant, exp.Revoke, exp.Merge, exp.TruncateTable, exp.Into)
 
 app = Flask(__name__)
@@ -70,17 +70,17 @@ def validate_sql(sql: str) -> str:
 def connect_db():
     database_url = os.getenv("DATABASE_URL", "").strip()
     if database_url:
-        conn = psycopg2.connect(database_url, connect_timeout=5, sslmode="require", application_name="SedukopiSQLPracticeLab")
+        conn = psycopg2.connect(database_url, connect_timeout=5, sslmode="require", application_name="KirimlajuSQLPracticeLab")
     else:
         # Optional local development only. Do not use this mode for public deployment.
-        required = ["SEDUKOPI_DB_USER", "SEDUKOPI_DB_PASSWORD"]
+        required = ["KIRIMLAJU_DB_USER", "KIRIMLAJU_DB_PASSWORD"]
         missing = [k for k in required if not os.getenv(k)]
         if missing:
             raise RuntimeError("Database credentials are not configured. Set " + ", ".join(missing) + ".")
         conn = psycopg2.connect(
-            host=os.getenv("SEDUKOPI_DB_HOST", "127.0.0.1"), port=int(os.getenv("SEDUKOPI_DB_PORT", "5432")),
-            dbname=os.getenv("SEDUKOPI_DB_NAME", "sedukopi"), user=os.getenv("SEDUKOPI_DB_USER"),
-            password=os.getenv("SEDUKOPI_DB_PASSWORD"), connect_timeout=5, application_name="SedukopiSQLPracticeLab",
+            host=os.getenv("KIRIMLAJU_DB_HOST", "127.0.0.1"), port=int(os.getenv("KIRIMLAJU_DB_PORT", "5432")),
+            dbname=os.getenv("KIRIMLAJU_DB_NAME", "kirimlaju"), user=os.getenv("KIRIMLAJU_DB_USER"),
+            password=os.getenv("KIRIMLAJU_DB_PASSWORD"), connect_timeout=5, application_name="KirimlajuSQLPracticeLab",
         )
     conn.set_session(readonly=True, autocommit=False)
     if REQUIRE_NON_SUPERUSER:
@@ -93,11 +93,11 @@ def connect_db():
             if not row:
                 raise RuntimeError("Could not verify the configured database role.")
             if row[0]:
-                raise RuntimeError("The configured database role is a superuser. Configure the dedicated sedukopi_reader role.")
+                raise RuntimeError("The configured database role is a superuser. Configure the dedicated kirimlaju_reader role.")
             if row[1] or row[2]:
                 raise RuntimeError("The configured database role can create database/schema objects. Use a read-only role.")
             if not all(row[3:3+len(TABLES)]):
-                raise RuntimeError("The configured role must have SELECT access to all five Sedukopi tables in schema public.")
+                raise RuntimeError("The configured role must have SELECT access to all four Kirimlaju tables in schema public.")
             if any(row[3+len(TABLES):]):
                 raise RuntimeError("The configured database role has write-related table privileges. Use a SELECT-only role.")
             conn.rollback()
@@ -126,7 +126,7 @@ def execute_query(sql: str) -> dict[str, Any]:
     started = time.perf_counter()
     conn = connect_db()
     try:
-        with conn.cursor(cursor_factory=RealDictCursor) as cur:
+        with conn.cursor() as cur:
             cur.execute("SELECT set_config('statement_timeout', %s, true)", (f"{QUERY_TIMEOUT_MS}ms",))
             cur.execute("SELECT set_config('lock_timeout', %s, true)", (f"{LOCK_TIMEOUT_MS}ms",))
             cur.execute("SELECT set_config('idle_in_transaction_session_timeout', %s, true)", (f"{QUERY_TIMEOUT_MS + 2000}ms",))
@@ -137,7 +137,7 @@ def execute_query(sql: str) -> dict[str, Any]:
             raw_rows = cur.fetchmany(MAX_ROWS + 1)
             truncated = len(raw_rows) > MAX_ROWS
             raw_rows = raw_rows[:MAX_ROWS]
-            rows = [[json_safe(row.get(c)) for c in columns] for row in raw_rows]
+            rows = [[json_safe(value) for value in row] for row in raw_rows]
             payload = json.dumps({"columns": columns, "rows": rows}, ensure_ascii=False, default=str)
             if len(payload.encode("utf-8")) > MAX_RESULT_BYTES:
                 raise ValueError("Result payload is too large. Select fewer columns or rows.")
@@ -200,7 +200,7 @@ def rate_limited(_): return error_response("Too many requests. Please wait befor
 
 @app.get("/")
 def root():
-    return jsonify({"service":"Sedukopi SQL Practice Lab API", "status":"online", "health":"/health"})
+    return jsonify({"service":"Kirimlaju SQL Practice Lab API", "status":"online", "health":"/health"})
 
 @app.get("/health")
 def health():
@@ -280,7 +280,7 @@ def validate():
     finally: QUERY_SEMAPHORE.release()
 
 if __name__ == "__main__":
-    host = os.getenv("SEDUKOPI_APP_HOST", "127.0.0.1")
+    host = os.getenv("KIRIMLAJU_APP_HOST", "127.0.0.1")
     if host not in ("127.0.0.1", "localhost"):
         raise SystemExit("For local development, bind to localhost only; Render runs this app through Gunicorn.")
     app.run(host=host, port=PORT, debug=False)

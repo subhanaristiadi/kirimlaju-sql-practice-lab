@@ -1,8 +1,10 @@
--- Run in Neon SQL Editor as the project owner/admin AFTER seed_neon.py succeeds.
--- Replace the password placeholder yourself. Do not commit a real password.
-CREATE ROLE sedukopi_reader LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT
+-- Dokumentasi manual; seed_neon.py membuat role dan password acak secara otomatis.
+-- Jalankan sebagai owner pada database kirimlaju baru. Jangan commit password nyata.
+CREATE ROLE kirimlaju_reader LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT
   PASSWORD 'REPLACE_WITH_A_UNIQUE_STRONG_PASSWORD';
-GRANT CONNECT ON DATABASE neondb TO sedukopi_reader;
-GRANT USAGE ON SCHEMA public TO sedukopi_reader;
-GRANT SELECT ON TABLE public.outlets, public.staff, public.menu_items, public.orders, public.order_details
-  TO sedukopi_reader;
+REVOKE CREATE ON SCHEMA public FROM PUBLIC;
+GRANT CONNECT ON DATABASE kirimlaju TO kirimlaju_reader;
+GRANT USAGE ON SCHEMA public TO kirimlaju_reader;
+GRANT SELECT ON customers, routes, shipments, status_history TO kirimlaju_reader;
+ALTER ROLE kirimlaju_reader SET default_transaction_read_only = on;
+ALTER ROLE kirimlaju_reader SET statement_timeout = '10s';

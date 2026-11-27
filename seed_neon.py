@@ -1,96 +1,70 @@
-"""Create/populate a fresh Neon database from the five supplied Sedukopi CSV files.
+"""Seed only an empty database, preserve source CSV values, create a SELECT-only reader.
 
-Run locally after setting SEDUKOPI_SEED_DATABASE_URL to a Neon OWNER/admin connection string.
-This script refuses to proceed if any target tables already exist. It does not drop tables.
+Usage: python seed_neon.py (reads NEON_ADMIN_DATABASE_URL), or --stdin-url.
+The administrative credential is never persisted. The reader URL goes in ignored .env.
 """
-import csv, os, sys, getpass
+import csv, hashlib, io, json, os, secrets, sys
 from pathlib import Path
+from urllib.parse import urlsplit, urlunsplit, quote
 import psycopg2
+from psycopg2 import sql
 
-BASE = Path(__file__).resolve().parent
-CSV_DIR = Path(os.getenv("SEDUKOPI_CSV_DIR", str(BASE / "data"))).resolve()
-URL = os.getenv("SEDUKOPI_SEED_DATABASE_URL", "").strip()
-TABLE_FILES = {
-    "outlets": ("outlets.csv", "outlet_id, name, city, province, address, manager_name, opening_date, status, seating_capacity"),
-    "staff": ("staff.csv", "staff_id, name, role, outlet_id, hire_date, monthly_salary, status"),
-    "menu_items": ("menu_items.csv", "item_id, name, category, price, cost_price, is_available, calories"),
-    "orders": ("orders.csv", "order_id, outlet_id, order_date, order_time, total_amount, payment_method, order_type, staff_id"),
-    "order_details": ("order_details.csv", "detail_id, order_id, item_id, quantity, unit_price, subtotal, notes"),
-}
-DDL = [
-"""CREATE TABLE public.outlets (
- outlet_id VARCHAR(10) PRIMARY KEY, name VARCHAR(150), city VARCHAR(100), province VARCHAR(100),
- address TEXT, manager_name VARCHAR(100), opening_date DATE, status VARCHAR(20), seating_capacity INTEGER
-)""",
-"""CREATE TABLE public.staff (
- staff_id VARCHAR(10) PRIMARY KEY, name VARCHAR(150), role VARCHAR(100), outlet_id VARCHAR(10),
- hire_date DATE, monthly_salary NUMERIC(12,2), status VARCHAR(20),
- CONSTRAINT staff_outlet_fk FOREIGN KEY (outlet_id) REFERENCES public.outlets(outlet_id)
-)""",
-"""CREATE TABLE public.menu_items (
- item_id VARCHAR(10) PRIMARY KEY, name VARCHAR(150), category VARCHAR(100), price NUMERIC(12,2),
- cost_price NUMERIC(12,2), is_available BOOLEAN, calories INTEGER
-)""",
-"""CREATE TABLE public.orders (
- order_id VARCHAR(10) PRIMARY KEY, outlet_id VARCHAR(10), order_date DATE, order_time TIME,
- total_amount NUMERIC(12,2), payment_method VARCHAR(50), order_type VARCHAR(50), staff_id VARCHAR(10),
- CONSTRAINT orders_outlet_fk FOREIGN KEY (outlet_id) REFERENCES public.outlets(outlet_id),
- CONSTRAINT orders_staff_fk FOREIGN KEY (staff_id) REFERENCES public.staff(staff_id)
-)""",
-"""CREATE TABLE public.order_details (
- detail_id VARCHAR(10) PRIMARY KEY, order_id VARCHAR(10), item_id VARCHAR(10), quantity INTEGER,
- unit_price NUMERIC(12,2), subtotal NUMERIC(12,2), notes TEXT,
- CONSTRAINT order_details_order_fk FOREIGN KEY (order_id) REFERENCES public.orders(order_id),
- CONSTRAINT order_details_item_fk FOREIGN KEY (item_id) REFERENCES public.menu_items(item_id)
-)""",
-]
-EXPECTED = {"outlets":20,"staff":120,"menu_items":80,"orders":5000,"order_details":8123}
+ROOT=Path(__file__).resolve().parent
+TABLES=('customers','routes','shipments','status_history')
+EXPECTED=(600,80,4000,12747)
 
-def main():
-    url = URL or getpass.getpass("Paste Neon owner connection string (input hidden): ").strip()
-    if not url:
-        sys.exit("No Neon connection string supplied; no database changes were made.")
-    for table,(filename,_cols) in TABLE_FILES.items():
-        p=CSV_DIR/filename
-        if not p.is_file(): sys.exit(f"Missing file: {p}. Set SEDUKOPI_CSV_DIR to the folder containing all five CSVs.")
-        with p.open(encoding="utf-8-sig", newline="") as fp:
-            reader=csv.DictReader(fp)
-            got=list(reader.fieldnames or [])
-            expected=[x.strip() for x in _cols.split(",")]
-            if got != expected:
-                sys.exit(f"Unexpected header in {filename}: {got}; expected {expected}. No database changes were made.")
-    conn=psycopg2.connect(url, sslmode="require", connect_timeout=10, application_name="SedukopiNeonSeeder")
-    try:
-        conn.autocommit=False
+def seed(url):
+    with psycopg2.connect(url,sslmode='require',connect_timeout=15) as conn:
         with conn.cursor() as cur:
-            cur.execute("SELECT current_database(), current_user")
-            db,user=cur.fetchone()
-            cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name = ANY(%s)", (list(TABLE_FILES),))
-            existing=[r[0] for r in cur.fetchall()]
-            if existing:
-                raise RuntimeError(f"Safety stop: these target tables already exist in {db}: {', '.join(existing)}. Use a fresh empty Neon database; this script never drops tables.")
-            print(f"Connected to database {db} as {user}. Creating fresh Sedukopi tables...")
-            for ddl in DDL: cur.execute(ddl)
-            for table,(filename, cols) in TABLE_FILES.items():
-                path=CSV_DIR/filename
-                with path.open("r", encoding="utf-8-sig", newline="") as fp:
-                    cur.copy_expert(f"COPY public.{table} ({cols}) FROM STDIN WITH (FORMAT CSV, HEADER TRUE, ENCODING 'UTF8')", fp)
-                cur.execute(f"SELECT COUNT(*) FROM public.{table}")
-                n=cur.fetchone()[0]
-                if n != EXPECTED[table]: raise RuntimeError(f"Row count mismatch for {table}: expected {EXPECTED[table]}, loaded {n}.")
-                print(f"  {table}: {n} rows")
-            cur.execute("SELECT COUNT(*) FROM public.staff s LEFT JOIN public.outlets o ON s.outlet_id=o.outlet_id WHERE o.outlet_id IS NULL")
-            if cur.fetchone()[0]: raise RuntimeError("Orphan staff.outlet_id values detected.")
-            cur.execute("SELECT COUNT(*) FROM public.orders x LEFT JOIN public.outlets o ON x.outlet_id=o.outlet_id LEFT JOIN public.staff s ON x.staff_id=s.staff_id WHERE o.outlet_id IS NULL OR s.staff_id IS NULL")
-            if cur.fetchone()[0]: raise RuntimeError("Orphan orders foreign keys detected.")
-            cur.execute("SELECT COUNT(*) FROM public.order_details d LEFT JOIN public.orders o ON d.order_id=o.order_id LEFT JOIN public.menu_items m ON d.item_id=m.item_id WHERE o.order_id IS NULL OR m.item_id IS NULL")
-            if cur.fetchone()[0]: raise RuntimeError("Orphan order_details foreign keys detected.")
-        conn.commit()
-        print("\nSUCCESS: all five tables loaded and foreign-key orphan checks passed.")
-        print("Next: run create_reader_role.sql in Neon SQL Editor, then configure Render DATABASE_URL with the reader role.")
-    except Exception as exc:
-        conn.rollback()
-        print(f"FAILED; the transaction was rolled back. {exc}", file=sys.stderr)
-        sys.exit(1)
-    finally: conn.close()
-if __name__ == "__main__": main()
+            cur.execute("SELECT tablename FROM pg_tables WHERE schemaname='public'")
+            if cur.fetchall():
+                raise RuntimeError('Database is not empty; refusing to overwrite existing data.')
+            cur.execute((ROOT/'schema.sql').read_text(encoding='utf-8'))
+            manifest={}
+            for table,expected in zip(TABLES,EXPECTED):
+                path=ROOT/'data'/f'{table}.csv'
+                with path.open(encoding='utf-8-sig',newline='') as f:
+                    reader=csv.reader(f)
+                    columns=next(reader)
+                    rows=list(reader)
+                assert len(rows)==expected,(table,len(rows))
+                buffer=io.StringIO()
+                writer=csv.writer(buffer,lineterminator='\n')
+                writer.writerow(columns)
+                writer.writerows(rows)
+                buffer.seek(0)
+                query=sql.SQL('COPY {} ({}) FROM STDIN WITH (FORMAT CSV, HEADER TRUE)').format(sql.Identifier(table),sql.SQL(',').join(map(sql.Identifier,columns)))
+                cur.copy_expert(query,buffer)
+                cur.execute(sql.SQL('SELECT COUNT(*) FROM {}').format(sql.Identifier(table)))
+                assert cur.fetchone()[0]==expected
+                manifest[table]={'rows':expected,'sha256':hashlib.sha256(path.read_bytes()).hexdigest()}
+            cur.execute('REVOKE CREATE ON SCHEMA public FROM PUBLIC')
+            password=secrets.token_urlsafe(36)
+            cur.execute(sql.SQL('CREATE ROLE kirimlaju_reader LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT PASSWORD {}').format(sql.Literal(password)))
+            cur.execute('GRANT USAGE ON SCHEMA public TO kirimlaju_reader')
+            cur.execute('GRANT SELECT ON ALL TABLES IN SCHEMA public TO kirimlaju_reader')
+            cur.execute("ALTER ROLE kirimlaju_reader SET default_transaction_read_only = on")
+            cur.execute("ALTER ROLE kirimlaju_reader SET statement_timeout = '10s'")
+            cur.execute("ALTER ROLE kirimlaju_reader SET idle_in_transaction_session_timeout = '15s'")
+            cur.execute('SELECT current_database()')
+            cur.execute(sql.SQL('GRANT CONNECT ON DATABASE {} TO kirimlaju_reader').format(sql.Identifier(cur.fetchone()[0])))
+    parsed=urlsplit(url)
+    host=parsed.hostname
+    if '-pooler' not in host:
+        host=host.replace('.','-pooler.',1)
+    reader_url=urlunsplit((parsed.scheme,f'kirimlaju_reader:{quote(password)}@{host}'+(f':{parsed.port}' if parsed.port else ''),parsed.path,parsed.query,parsed.fragment))
+    env=ROOT/'.env'
+    if env.exists():
+        raise RuntimeError('.env exists; reader created but local credential was not overwritten.')
+    env.write_text(f'DATABASE_URL={reader_url}\nREQUIRE_NON_SUPERUSER=true\n',encoding='utf-8')
+    (ROOT/'data/manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
+    print('Seeded 17,427 rows. SELECT-only reader configured in ignored .env. Admin URL not persisted.')
+
+if __name__=='__main__':
+    if '--stdin-url' in sys.argv:
+        print('Ready for admin URL on stdin (input is hidden).',flush=True)
+        import getpass
+        url=getpass.getpass('')
+    else:
+        url=os.environ['NEON_ADMIN_DATABASE_URL']
+    seed(url.strip())
